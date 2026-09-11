@@ -13,9 +13,11 @@ import {
   Printer,
   RotateCcw,
   Sparkles,
+  Zap,
 } from 'lucide-react';
 import { AnalisisHasil, SoalItem, JawabanSiswaMap } from '../types';
 import { checkJawaban, formatJawabanSiswa, formatKunciJawaban } from '../utils/soalFormatHelper';
+import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
 
 interface CompetencyReportViewProps {
   analisis: AnalisisHasil;
@@ -411,8 +413,19 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
 
                 {/* Pembahasan Detail */}
                 <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-700">
-                  <strong className="text-slate-900 block mb-1">Pembahasan &amp; Pembuktian:</strong>
+                  <strong className="text-slate-900 block mb-1">Langkah Pembahasan &amp; Pembuktian:</strong>
                   <p className="whitespace-pre-line leading-relaxed">{soal.pembahasan}</p>
+                </div>
+
+                {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
+                <div className="mt-2.5 p-3 bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-xl border border-amber-200 text-xs text-amber-950 shadow-2xs">
+                  <strong className="text-amber-900 flex items-center gap-1.5 mb-1">
+                    <Zap className="w-3.5 h-3.5 text-amber-600 fill-amber-500 shrink-0" />
+                    Tips &amp; Trik Cepat Menjawab Soal TKA Ini:
+                  </strong>
+                  <p className="whitespace-pre-line leading-relaxed bg-white/95 p-2.5 rounded-lg border border-amber-200/80 shadow-2xs">
+                    {getFallbackTipsTrik(soal)}
+                  </p>
                 </div>
               </div>
             );

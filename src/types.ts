@@ -105,6 +105,7 @@ export interface SoalItem {
   kesalahan_umum?: string;
   alasan_distraktor?: Record<string, string>;
   rubrik?: RubrikAnalitik;
+  tips_trik?: string;
 }
 
 export interface PaketSoalMetadata {

@@ -12,9 +12,11 @@ import {
   Layers,
   ChevronRight,
   Compass,
+  Zap,
 } from 'lucide-react';
 import { SoalItem, Jenjang, Kelas, Domain, AnalisisHasil } from '../types';
 import { DEFAULT_SOAL_BANK } from '../data/defaultBank';
+import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
 
 interface AdaptiveCatViewProps {
   jenjang: Jenjang;
@@ -449,10 +451,21 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
               {/* Pembahasan */}
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
                 <span className="font-bold text-slate-800 block mb-1">
-                  Pembahasan Langkah Berpikir:
+                  Langkah Pembahasan &amp; Pembuktian:
                 </span>
                 <p className="text-slate-700 whitespace-pre-line leading-relaxed">
                   {currentSoal.pembahasan}
+                </p>
+              </div>
+
+              {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
+              <div className="p-3.5 bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-xl border border-amber-200/90 text-xs shadow-2xs">
+                <div className="flex items-center gap-2 text-amber-900 font-bold mb-1.5">
+                  <Zap className="w-4 h-4 text-amber-600 fill-amber-500 shrink-0" />
+                  <span>Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</span>
+                </div>
+                <p className="text-amber-950 font-medium leading-relaxed bg-white/95 p-3 rounded-lg border border-amber-200 shadow-2xs">
+                  {getFallbackTipsTrik(currentSoal)}
                 </p>
               </div>
 

@@ -15,10 +15,12 @@ import {
   Link2,
   Layers,
   CheckSquare,
+  Zap,
 } from 'lucide-react';
 import { SoalItem } from '../types';
 import { getRubrikForSoal } from '../utils/rubrikHelper';
 import { RubrikAnalitikTable } from './RubrikAnalitikTable';
+import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
 import {
   isPgkSoal,
   isMenjodohkanSoal,
@@ -64,8 +66,11 @@ ${soal.pertanyaan}
 ${soal.opsi && Object.keys(soal.opsi).length > 0 ? `PILIHAN JAWABAN:\n${Object.entries(soal.opsi).map(([k, v]) => `${k}. ${v}`).join('\n')}\n` : ''}
 KUNCI / INTI JAWABAN: ${soal.kunci}
 
-PEMBAHASAN & LANGKAH:
+LANGKAH PEMBAHASAN & PEMBUKTIAN:
 ${soal.pembahasan}
+
+TIPS & TRIK CEPAT MENJAWAB SOAL TKA:
+${getFallbackTipsTrik(soal)}
 
 INDIKATOR:
 ${soal.indikator}
@@ -436,6 +441,17 @@ ${rubricText}
             </span>
             <p className="text-slate-700 whitespace-pre-line leading-relaxed bg-white p-3 rounded-lg border border-slate-200">
               {soal.pembahasan}
+            </p>
+          </div>
+
+          {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
+          <div className="p-3.5 bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-xl border border-amber-200/90 text-xs shadow-2xs">
+            <div className="flex items-center gap-2 text-amber-900 font-bold mb-1.5">
+              <Zap className="w-4 h-4 text-amber-600 fill-amber-500 shrink-0" />
+              <span>Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</span>
+            </div>
+            <p className="text-amber-950 font-medium leading-relaxed bg-white/95 p-3 rounded-lg border border-amber-200 shadow-2xs">
+              {getFallbackTipsTrik(soal)}
             </p>
           </div>
 

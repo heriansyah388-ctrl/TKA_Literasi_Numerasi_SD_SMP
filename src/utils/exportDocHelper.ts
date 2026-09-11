@@ -8,6 +8,7 @@ import {
   formatKunciJawaban,
 } from './soalFormatHelper';
 import { getRubrikForSoal } from './rubrikHelper';
+import { getFallbackTipsTrik } from './tkaTipsHelper';
 
 function escapeHtml(str: string | undefined | null): string {
   if (!str) return '';
@@ -295,6 +296,11 @@ export function exportToWordDoc(
           <div style="margin-bottom: 6pt;">
             <strong>Langkah Pembahasan &amp; Bukti Penalaran:</strong><br/>
             <span style="color: #334155; line-height: 1.4;">${escapeHtml(soal.pembahasan).replace(/\n/g, '<br/>')}</span>
+          </div>
+
+          <div style="margin-bottom: 6pt; background-color: #fffbeb; border: 1pt solid #fcd34d; padding: 5pt 7pt; font-size: 8.5pt; color: #78350f;">
+            <strong>⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</strong><br/>
+            <span style="line-height: 1.4;">${escapeHtml(getFallbackTipsTrik(soal)).replace(/\n/g, '<br/>')}</span>
           </div>
       `;
 

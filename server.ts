@@ -107,7 +107,8 @@ PEDOMAN DOMAIN:
 PRINSIP WAJIB:
 - Distraktor opsi (A, B, C, D) harus masuk akal dan berasal dari kemungkinan kesalahan konsepsi siswa.
 - Kunci jawaban mutlak tepat dan dapat dibuktikan dari stimulus / perhitungan.
-- Pembahasan harus mendetail: jelaskan proses berpikir siswa, bukti kalimat teks untuk Literasi, dan langkah matematika untuk Numerasi.
+- Pembahasan harus mendalam dan terstruktur: berikan "Langkah Pembahasan & Pembuktian" (proses berpikir langkah demi langkah, bukti kalimat dari stimulus untuk Literasi, dan prosedur matematis/logis untuk Numerasi).
+- WAJIB MENAMBAHKAN TIPS & TRIK CEPAT: Setiap butir soal WAJIB memiliki properti "tips_trik" berisi "Tips & Trik cepat menjawab soal TKA ini" (strategi cerdas, eliminasi opsi ekstrem/pembatas mutlak, teknik scanning kata kunci pada stimulus, rumus praktis, tripel pythagoras, faktor pengali persentase, atau trik hemat waktu bagi siswa).
 - Cantumkan indikator keberhasilan, kemampuan yang diukur, kesalahan umum siswa, serta alasan distraktor.
 - PENTING UNTUK SOAL URAIAN: Jika bentuk_soal adalah 'Uraian' atau 'Campuran', WAJIB menyertakan objek 'rubrik' (Rubrik Skor Analitik Bertingkat skala 2, 1, 0) lengkap dengan deskripsi kriteria dan contoh jawaban siswa.
 - Terapkan 10 Internal Quality Checks sebelum menghasilkan output.
@@ -145,7 +146,8 @@ OUTPUT HARUS DALAM FORMAT JSON VALID:
         "D": "Pilihan D"
       },
       "kunci": "A/B/C/D (atau uraian kunci jika Uraian)",
-      "pembahasan": "Penjelasan detail langkah berpikir, bukti teks atau rumus perhitungan",
+      "pembahasan": "Langkah Pembahasan & Pembuktian: Proses berpikir runtut, kutipan kalimat bukti teks untuk literasi atau langkah kalkulasi sistematis untuk numerasi.",
+      "tips_trik": "Tips & Trik cepat menjawab soal TKA ini: Strategi praktis kilat, metode eliminasi distraktor, kata kunci scanning, atau trik hitung efisien.",
       "indikator": "Indikator pencapaian kompetensi siswa",
       "tag": ["Literasi", "SD 5", "..."],
       "kemampuan_diukur": "Uraian kemampuan",
@@ -395,6 +397,7 @@ app.post('/api/generate', async (req, res) => {
           kesalahan_umum: item.kesalahan_umum || '',
           alasan_distraktor: item.alasan_distraktor || {},
           rubrik: item.rubrik && item.rubrik.kriteria ? item.rubrik : undefined,
+          tips_trik: item.tips_trik || undefined,
         }));
 
         const result: PaketSoalResponse = {
@@ -501,7 +504,8 @@ Karakteristik:
 - Sangat kontekstual, menarik, realistis.
 - Menguji penalaran (bukan sekadar rumus/hafalan).
 - 4 opsi pilihan ganda A, B, C, D dengan distraktor bermakna.
-- Pembahasan lengkap langkah demi langkah.
+- Pembahasan lengkap langkah demi langkah ("Langkah Pembahasan & Pembuktian").
+- WAJIB berikan "tips_trik": Tips dan trik cepat menjawab soal TKA ini.
 
 Keluarkan dalam format JSON:
 {
@@ -523,7 +527,8 @@ Keluarkan dalam format JSON:
     "D": "..."
   },
   "kunci": "A",
-  "pembahasan": "...",
+  "pembahasan": "Langkah Pembahasan & Pembuktian: Proses berpikir runtut...",
+  "tips_trik": "Tips & Trik cepat menjawab soal TKA ini: Strategi eliminasi, scanning, atau jalan pintas...",
   "indikator": "...",
   "tag": ["Adaptif", "${domain}", "${nextDifficulty}"],
   "kemampuan_diukur": "...",

@@ -12,6 +12,7 @@ import {
   formatKunciJawaban,
 } from '../utils/soalFormatHelper';
 import { exportToWordDoc } from '../utils/exportDocHelper';
+import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
 
 interface PrintableViewProps {
   mode: 'siswa' | 'guru';
@@ -378,6 +379,13 @@ export const PrintableView: React.FC<PrintableViewProps> = ({
                         <strong>Langkah Pembahasan &amp; Pembuktian:</strong>
                         <p className="mt-0.5 text-slate-700 whitespace-pre-line leading-relaxed">
                           {soal.pembahasan}
+                        </p>
+                      </div>
+
+                      <div className="p-2.5 bg-amber-50/80 rounded border border-amber-300 text-amber-950 text-[10.5px]">
+                        <strong className="text-amber-900 block mb-0.5">⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</strong>
+                        <p className="whitespace-pre-line leading-relaxed">
+                          {getFallbackTipsTrik(soal)}
                         </p>
                       </div>
 
