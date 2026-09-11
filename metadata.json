@@ -1,0 +1,6 @@
+{
+  "name": "Generator Soal TKA Literasi & Numerasi SD-SMP",
+  "description": "AI Generator Soal Tes Kemampuan Akademik (TKA) Siswa SD dan SMP di Indonesia untuk domain Literasi dan Numerasi dengan mode ujian interaktif, profil kompetensi, dan rekomendasi belajar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
