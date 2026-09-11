@@ -55,15 +55,15 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
   const getKategoriBadgeColor = (kat: string) => {
     switch (kat) {
       case 'Sangat Baik':
-        return 'bg-emerald-50 text-emerald-800 border-emerald-300';
+        return 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800';
       case 'Sudah Menguasai':
-        return 'bg-blue-50 text-blue-800 border-blue-300';
+        return 'bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border-blue-300 dark:border-blue-800';
       case 'Sudah Berkembang':
-        return 'bg-indigo-50 text-indigo-800 border-indigo-300';
+        return 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 border-indigo-300 dark:border-indigo-800';
       case 'Sedang Berkembang':
-        return 'bg-amber-50 text-amber-800 border-amber-300';
+        return 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800';
       default:
-        return 'bg-rose-50 text-rose-800 border-rose-300';
+        return 'bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-800';
     }
   };
 
@@ -76,17 +76,17 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       {/* Top Header Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 mb-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 mb-2">
               <Award className="w-3.5 h-3.5" />
               <span>Laporan Asesmen Diagnostik Akademik</span>
             </div>
-            <h2 className="text-2xl font-bold text-slate-900">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
               Profil Kompetensi &amp; Rekomendasi Belajar
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Evaluasi ketercapaian kompetensi literasi dan numerasi berdasarkan jawaban siswa.
             </p>
           </div>
@@ -94,7 +94,7 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onPrint}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors border border-slate-200 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               <span>Cetak Hasil</span>
@@ -111,26 +111,26 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
 
         {/* Score & Metric Summary */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-            <span className="text-xs text-slate-500 font-medium block mb-1">Skor Akhir</span>
-            <span className="text-3xl font-extrabold text-slate-900">{skor}</span>
-            <span className="text-[11px] text-slate-400 block mt-0.5">dari 100 poin</span>
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-center">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium block mb-1">Skor Akhir</span>
+            <span className="text-3xl font-extrabold text-slate-900 dark:text-slate-100">{skor}</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">dari 100 poin</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 text-center">
-            <span className="text-xs text-emerald-800 font-medium block mb-1">Jawaban Benar</span>
-            <span className="text-3xl font-extrabold text-emerald-700">{benar}</span>
-            <span className="text-[11px] text-emerald-600 block mt-0.5">dari {totalSoal} butir</span>
+          <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center">
+            <span className="text-xs text-emerald-800 dark:text-emerald-400 font-medium block mb-1">Jawaban Benar</span>
+            <span className="text-3xl font-extrabold text-emerald-700 dark:text-emerald-300">{benar}</span>
+            <span className="text-[11px] text-emerald-600 dark:text-emerald-500 block mt-0.5">dari {totalSoal} butir</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-rose-50/60 border border-rose-200 text-center">
-            <span className="text-xs text-rose-800 font-medium block mb-1">Perlu Perbaikan</span>
-            <span className="text-3xl font-extrabold text-rose-700">{salah}</span>
-            <span className="text-[11px] text-rose-600 block mt-0.5">butir belum tepat</span>
+          <div className="p-4 rounded-xl bg-rose-50/60 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-center">
+            <span className="text-xs text-rose-800 dark:text-rose-400 font-medium block mb-1">Perlu Perbaikan</span>
+            <span className="text-3xl font-extrabold text-rose-700 dark:text-rose-300">{salah}</span>
+            <span className="text-[11px] text-rose-600 dark:text-rose-500 block mt-0.5">butir belum tepat</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-indigo-50/60 border border-indigo-200 text-center flex flex-col justify-center">
-            <span className="text-xs text-indigo-800 font-medium block mb-1">Kategori Capaian</span>
+          <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-center flex flex-col justify-center">
+            <span className="text-xs text-indigo-800 dark:text-indigo-300 font-medium block mb-1">Kategori Capaian</span>
             <span
               className={`inline-block px-2.5 py-1 rounded-lg text-xs font-bold border ${getKategoriBadgeColor(
                 kategori
@@ -138,7 +138,7 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
             >
               {kategori}
             </span>
-            <span className="text-[10px] text-slate-400 mt-1">Waktu: {formatMenit(durasiDetik)}</span>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">Waktu: {formatMenit(durasiDetik)}</span>
           </div>
         </div>
       </div>
@@ -146,21 +146,21 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
       {/* Profil Subdomain Kompetensi */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* Literasi Profil */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6">
-          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100">
-            <div className="p-2 rounded-lg bg-blue-100 text-blue-700">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs p-5 sm:p-6">
+          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Domain Literasi Membaca</h3>
-              <p className="text-[11px] text-slate-500">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Domain Literasi Membaca</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Pencapaian 5 subdomain kompetensi literasi teks
               </p>
             </div>
           </div>
 
           {literasiScores.length === 0 ? (
-            <div className="p-4 bg-slate-50 rounded-xl text-center text-xs text-slate-500">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl text-center text-xs text-slate-500 dark:text-slate-400">
               Tidak ada butir soal literasi pada paket tes ini.
             </div>
           ) : (
@@ -168,12 +168,12 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
               {literasiScores.map((sub, idx) => (
                 <div key={idx} className="text-xs">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="font-semibold text-slate-700">{sub.nama}</span>
-                    <span className="text-slate-500">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">{sub.nama}</span>
+                    <span className="text-slate-500 dark:text-slate-400">
                       {sub.benar}/{sub.totalSoal} ({sub.persentase}%)
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         sub.persentase >= 80
@@ -185,8 +185,8 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                       style={{ width: `${Math.max(5, sub.persentase)}%` }}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-0.5 inline-block">
-                    Capaian: <strong className="text-slate-600">{sub.kategori}</strong>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 inline-block">
+                    Capaian: <strong className="text-slate-600 dark:text-slate-300">{sub.kategori}</strong>
                   </span>
                 </div>
               ))}
@@ -195,21 +195,21 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
         </div>
 
         {/* Numerasi Profil */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6">
-          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100">
-            <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs p-5 sm:p-6">
+          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">
               <Calculator className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Domain Penalaran Numerasi</h3>
-              <p className="text-[11px] text-slate-500">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Domain Penalaran Numerasi</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Pencapaian 5 subdomain penalaran matematika
               </p>
             </div>
           </div>
 
           {numerasiScores.length === 0 ? (
-            <div className="p-4 bg-slate-50 rounded-xl text-center text-xs text-slate-500">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl text-center text-xs text-slate-500 dark:text-slate-400">
               Tidak ada butir soal numerasi pada paket tes ini.
             </div>
           ) : (
@@ -217,12 +217,12 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
               {numerasiScores.map((sub, idx) => (
                 <div key={idx} className="text-xs">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="font-semibold text-slate-700">{sub.nama}</span>
-                    <span className="text-slate-500">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">{sub.nama}</span>
+                    <span className="text-slate-500 dark:text-slate-400">
                       {sub.benar}/{sub.totalSoal} ({sub.persentase}%)
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         sub.persentase >= 80
@@ -234,8 +234,8 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                       style={{ width: `${Math.max(5, sub.persentase)}%` }}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-0.5 inline-block">
-                    Capaian: <strong className="text-slate-600">{sub.kategori}</strong>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 inline-block">
+                    Capaian: <strong className="text-slate-600 dark:text-slate-300">{sub.kategori}</strong>
                   </span>
                 </div>
               ))}
@@ -245,22 +245,22 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
       </div>
 
       {/* Bagian M: Rekomendasi Pembelajaran Pedagogis */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-7 mb-8">
-        <div className="flex items-center gap-2 pb-3 mb-5 border-b border-slate-100">
-          <Sparkles className="w-5 h-5 text-indigo-600" />
-          <h3 className="text-base font-bold text-slate-900">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-7 mb-8">
+        <div className="flex items-center gap-2 pb-3 mb-5 border-b border-slate-100 dark:border-slate-800">
+          <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
             Rencana Tindak Lanjut &amp; Rekomendasi Belajar
           </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           {/* Kompetensi yang Dikuasai */}
-          <div className="p-4 bg-emerald-50/50 rounded-xl border border-emerald-200">
-            <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5 mb-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <div className="p-4 bg-emerald-50/50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800">
+            <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-1.5 mb-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               1. Kompetensi yang Sudah Dikuasai
             </span>
-            <ul className="space-y-1.5 text-xs text-emerald-900/90 list-disc list-inside">
+            <ul className="space-y-1.5 text-xs text-emerald-900/90 dark:text-emerald-200/90 list-disc list-inside">
               {kompetensiDikuasai.map((k, i) => (
                 <li key={i} className="leading-relaxed">
                   {k}
@@ -270,12 +270,12 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
           </div>
 
           {/* Kompetensi yang Perlu Diperkuat */}
-          <div className="p-4 bg-amber-50/50 rounded-xl border border-amber-200">
-            <span className="text-xs font-bold text-amber-900 flex items-center gap-1.5 mb-2">
-              <Target className="w-4 h-4 text-amber-600" />
+          <div className="p-4 bg-amber-50/50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800">
+            <span className="text-xs font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5 mb-2">
+              <Target className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               2. Kompetensi yang Perlu Diperkuat
             </span>
-            <ul className="space-y-1.5 text-xs text-amber-900/90 list-disc list-inside">
+            <ul className="space-y-1.5 text-xs text-amber-900/90 dark:text-amber-200/90 list-disc list-inside">
               {kompetensiPerluPenguatan.map((k, i) => (
                 <li key={i} className="leading-relaxed">
                   {k}
@@ -288,12 +288,12 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
         {/* Kesalahan Umum & Rekomendasi Materi */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
           {/* Kesalahan Umum */}
-          <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-            <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-2">
-              <AlertCircle className="w-4 h-4 text-slate-600" />
+          <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-2">
+              <AlertCircle className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               3. Analisis Kesalahan / Miskonsepsi
             </span>
-            <ul className="space-y-1.5 text-xs text-slate-700 list-disc list-inside">
+            <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 list-disc list-inside">
               {analisisKesalahan.map((item, i) => (
                 <li key={i} className="leading-relaxed">
                   {item}
@@ -303,12 +303,12 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
           </div>
 
           {/* Rekomendasi Materi Belajar */}
-          <div className="p-4 bg-indigo-50/40 rounded-xl border border-indigo-100">
-            <span className="text-xs font-bold text-indigo-900 flex items-center gap-1.5 mb-2">
-              <Lightbulb className="w-4 h-4 text-indigo-600" />
+          <div className="p-4 bg-indigo-50/40 dark:bg-indigo-950/30 rounded-xl border border-indigo-100 dark:border-indigo-850">
+            <span className="text-xs font-bold text-indigo-900 dark:text-indigo-300 flex items-center gap-1.5 mb-2">
+              <Lightbulb className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
               4. Rekomendasi Materi Belajar Siswa
             </span>
-            <ul className="space-y-1.5 text-xs text-indigo-900/90 list-disc list-inside">
+            <ul className="space-y-1.5 text-xs text-indigo-900/90 dark:text-indigo-200/90 list-disc list-inside">
               {rekomendasiMateri.map((m, i) => (
                 <li key={i} className="leading-relaxed">
                   {m}
@@ -319,7 +319,7 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
         </div>
 
         {/* Latihan Berikutnya */}
-        <div className="p-4 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm border border-slate-800">
           <div>
             <span className="text-[11px] text-indigo-300 font-semibold uppercase tracking-wider block">
               5. Saran Latihan Berikutnya
@@ -336,8 +336,8 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
       </div>
 
       {/* Review Soal Siswa */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-        <h3 className="text-base font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
           Ulasan Jawaban &amp; Pembahasan Setiap Soal
         </h3>
 
@@ -354,8 +354,8 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                 key={soal.id}
                 className={`p-5 rounded-2xl border transition-all ${
                   isCorrect
-                    ? 'bg-emerald-50/20 border-emerald-200'
-                    : 'bg-rose-50/20 border-rose-200'
+                    ? 'bg-emerald-50/20 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-850'
+                    : 'bg-rose-50/20 dark:bg-rose-950/20 border-rose-200 dark:border-rose-850'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 mb-3">
@@ -367,21 +367,21 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                     >
                       {idx + 1}
                     </span>
-                    <span className="text-xs font-semibold text-slate-800">
+                    <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
                       {soal.domain} • {soal.subdomain}
                     </span>
-                    <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200 font-medium">
+                    <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-medium">
                       {soal.bentuk_soal || 'Pilihan Ganda'}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs font-bold">
                     {isCorrect ? (
-                      <span className="text-emerald-700 flex items-center gap-1">
+                      <span className="text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
                         <CheckCircle2 className="w-4 h-4" /> Benar
                       </span>
                     ) : (
-                      <span className="text-rose-700 flex items-center gap-1">
+                      <span className="text-rose-700 dark:text-rose-400 flex items-center gap-1">
                         <XCircle className="w-4 h-4" /> Kurang Tepat
                       </span>
                     )}
@@ -389,41 +389,41 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                 </div>
 
                 {/* Stimulus Quote */}
-                <div className="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700 mb-3 font-serif">
+                <div className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 mb-3 font-serif">
                   {soal.stimulus}
                 </div>
 
-                <p className="text-xs sm:text-sm font-semibold text-slate-900 mb-3">
+                <p className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">
                   {soal.pertanyaan}
                 </p>
 
                 {/* Selected vs Correct Key */}
                 <div className="flex flex-wrap items-center gap-3 text-xs mb-3">
-                  <div className="bg-white px-3 py-1.5 rounded-lg border border-slate-200 flex-1 min-w-[200px]">
-                    <span className="text-slate-500 mr-1 block sm:inline">Jawaban Anda:</span>
-                    <strong className={isCorrect ? 'text-emerald-700' : 'text-rose-700'}>
+                  <div className="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 flex-1 min-w-[200px]">
+                    <span className="text-slate-500 dark:text-slate-400 mr-1 block sm:inline">Jawaban Anda:</span>
+                    <strong className={isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}>
                       {displayUserAns}
                     </strong>
                   </div>
-                  <div className="bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200 text-emerald-900 flex-1 min-w-[200px]">
-                    <span className="text-emerald-700 mr-1 block sm:inline">Kunci Jawaban Benar:</span>
+                  <div className="bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 flex-1 min-w-[200px]">
+                    <span className="text-emerald-700 dark:text-emerald-300 mr-1 block sm:inline">Kunci Jawaban Benar:</span>
                     <strong>{displayKunci}</strong>
                   </div>
                 </div>
 
                 {/* Pembahasan Detail */}
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-700">
-                  <strong className="text-slate-900 block mb-1">Langkah Pembahasan &amp; Pembuktian:</strong>
+                <div className="bg-slate-50 dark:bg-slate-800/80 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300">
+                  <strong className="text-slate-900 dark:text-slate-100 block mb-1">Langkah Pembahasan &amp; Pembuktian:</strong>
                   <p className="whitespace-pre-line leading-relaxed">{soal.pembahasan}</p>
                 </div>
 
                 {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
-                <div className="mt-2.5 p-3 bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-xl border border-amber-200 text-xs text-amber-950 shadow-2xs">
-                  <strong className="text-amber-900 flex items-center gap-1.5 mb-1">
-                    <Zap className="w-3.5 h-3.5 text-amber-600 fill-amber-500 shrink-0" />
+                <div className="mt-2.5 p-3 bg-gradient-to-r from-amber-50 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/30 rounded-xl border border-amber-200 dark:border-amber-800/80 text-xs text-amber-950 dark:text-amber-200 shadow-2xs">
+                  <strong className="text-amber-900 dark:text-amber-300 flex items-center gap-1.5 mb-1">
+                    <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 fill-amber-500 dark:fill-amber-400 shrink-0" />
                     Tips &amp; Trik Cepat Menjawab Soal TKA Ini:
                   </strong>
-                  <p className="whitespace-pre-line leading-relaxed bg-white/95 p-2.5 rounded-lg border border-amber-200/80 shadow-2xs">
+                  <p className="whitespace-pre-line leading-relaxed bg-white/95 dark:bg-slate-800/95 p-2.5 rounded-lg border border-amber-200/80 dark:border-amber-700/60 shadow-2xs text-slate-800 dark:text-slate-200">
                     {getFallbackTipsTrik(soal)}
                   </p>
                 </div>

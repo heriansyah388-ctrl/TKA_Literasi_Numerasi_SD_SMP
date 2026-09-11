@@ -124,16 +124,16 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-7 max-w-5xl mx-auto">
-      <div className="border-b border-slate-100 pb-5 mb-6">
-        <div className="flex items-center gap-2 text-indigo-600 mb-1">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 sm:p-7 max-w-5xl mx-auto transition-colors duration-200">
+      <div className="border-b border-slate-100 dark:border-slate-800 pb-5 mb-6">
+        <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 mb-1">
           <Sliders className="w-5 h-5" />
           <span className="text-xs font-bold uppercase tracking-wider">Panel Generator Soal</span>
         </div>
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100">
           Konfigurasi Asesmen Akademik Siswa
         </h2>
-        <p className="text-sm text-slate-500 mt-1">
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
           Pilih jenjang, domain literasi/numerasi, bentuk soal, dan mode pedagogis. Sistem AI akan
           memproduksi butir soal valid sesuai 15 prinsip asesmen berkualitas.
         </p>
@@ -141,13 +141,13 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Sumber / Mesin Pembuat Soal */}
-        <div className="bg-slate-50/80 rounded-2xl border border-slate-200 p-4 sm:p-5">
+        <div className="bg-slate-50/80 dark:bg-slate-950/60 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div>
-              <span className="text-xs font-bold text-slate-900 block">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block">
                 Sumber &amp; Mesin Pembuat Soal (Engine)
               </span>
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">
                 Pilih apakah ingin menghasilkan variasi soal baru dengan AI atau memuat soal kurasi terstandar.
               </span>
             </div>
@@ -157,9 +157,9 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                 type="button"
                 id="btn-open-catalog-from-form"
                 onClick={onOpenBankCatalog}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-700 bg-white border border-indigo-200 hover:bg-indigo-50 transition-colors shadow-2xs self-start sm:self-auto cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors shadow-2xs self-start sm:self-auto cursor-pointer"
               >
-                <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
+                <BookOpen className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 <span>Katalog Bank Kurasi (Terkalibrasi)</span>
               </button>
             )}
@@ -171,18 +171,18 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               onClick={() => setEngine('gemini')}
               className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
                 engine === 'gemini'
-                  ? 'bg-white border-emerald-500 shadow-sm ring-1 ring-emerald-500/30'
-                  : 'bg-white/60 border-slate-200 hover:border-slate-300'
+                  ? 'bg-white dark:bg-slate-800 border-emerald-500 shadow-sm ring-1 ring-emerald-500/30'
+                  : 'bg-white/60 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2">
-                  <div className={`p-1.5 rounded-lg ${engine === 'gemini' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+                  <div className={`p-1.5 rounded-lg ${engine === 'gemini' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">Gemini 3.8 Flash AI</h4>
-                    <span className="text-[10px] font-semibold text-emerald-600">Aktif • Generasi Baru</span>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Gemini 3.8 Flash AI</h4>
+                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Aktif • Generasi Baru</span>
                   </div>
                 </div>
                 <input
@@ -193,7 +193,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                   className="mt-1 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                 />
               </div>
-              <p className="text-[11px] text-slate-600 mt-2 leading-relaxed">
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                 Membuat butir soal baru, segar, dan unik secara cerdas sesuai kurikulum nasional, kisi-kisi TKA, dan topik spesifik yang Anda minta.
               </p>
             </div>
@@ -203,18 +203,18 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               onClick={() => setEngine('bank_kurasi')}
               className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
                 engine === 'bank_kurasi'
-                  ? 'bg-white border-indigo-600 shadow-sm ring-1 ring-indigo-600/30'
-                  : 'bg-white/60 border-slate-200 hover:border-slate-300'
+                  ? 'bg-white dark:bg-slate-800 border-indigo-600 shadow-sm ring-1 ring-indigo-600/30'
+                  : 'bg-white/60 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2">
-                  <div className={`p-1.5 rounded-lg ${engine === 'bank_kurasi' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500'}`}>
+                  <div className={`p-1.5 rounded-lg ${engine === 'bank_kurasi' ? 'bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
                     <BookOpen className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">Bank Kurasi Standar</h4>
-                    <span className="text-[10px] font-semibold text-indigo-600">Aktif • 100% Terkalibrasi</span>
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Bank Kurasi Standar</h4>
+                    <span className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Aktif • 100% Terkalibrasi</span>
                   </div>
                 </div>
                 <input
@@ -225,7 +225,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                   className="mt-1 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                 />
               </div>
-              <p className="text-[11px] text-slate-600 mt-2 leading-relaxed">
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
                 Memuat langsung butir soal baku yang telah divalidasi pakar kurikulum. 100% akurat, respons instan tanpa kuota AI.
               </p>
             </div>
@@ -236,7 +236,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Jenjang */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
               1. Jenjang Pendidikan
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -246,8 +246,8 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                 onClick={() => handleJenjangChange('SD')}
                 className={`py-2.5 px-4 rounded-xl text-sm font-medium border text-center transition-all cursor-pointer ${
                   jenjang === 'SD'
-                    ? 'bg-indigo-50 border-indigo-600 text-indigo-700 shadow-xs ring-1 ring-indigo-600'
-                    : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-600 text-indigo-700 dark:text-indigo-300 shadow-xs ring-1 ring-indigo-600'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
                 Sekolah Dasar (SD)
@@ -258,8 +258,8 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                 onClick={() => handleJenjangChange('SMP')}
                 className={`py-2.5 px-4 rounded-xl text-sm font-medium border text-center transition-all cursor-pointer ${
                   jenjang === 'SMP'
-                    ? 'bg-indigo-50 border-indigo-600 text-indigo-700 shadow-xs ring-1 ring-indigo-600'
-                    : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-600 text-indigo-700 dark:text-indigo-300 shadow-xs ring-1 ring-indigo-600'
+                    : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
                 Sekolah Menengah Pertama (SMP)
@@ -269,7 +269,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
           {/* Kelas */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-2">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
               2. Tingkat Kelas ({jenjang})
             </label>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
@@ -282,14 +282,14 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                   className={`py-2 px-2 rounded-lg text-xs font-semibold border text-center transition-all cursor-pointer ${
                     kelas === k
                       ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
                   {k}
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-slate-400 mt-1.5">
+            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1.5">
               {jenjang === 'SD'
                 ? 'SD 1-3: kalimat pendek konkret; SD 4-6: pemahaman teks terstruktur.'
                 : 'SMP 7-9: penalaran multi-langkah, analisis data, teks argumentatif.'}
@@ -299,7 +299,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
         {/* Row 2: Domain Kompetensi */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
             3. Domain Kompetensi
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -309,16 +309,16 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               onClick={() => setDomain('Literasi')}
               className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
                 domain === 'Literasi'
-                  ? 'bg-blue-50/70 border-blue-600 ring-1 ring-blue-600'
-                  : 'border-slate-200 hover:bg-slate-50'
+                  ? 'bg-blue-50/70 dark:bg-blue-950/40 border-blue-600 ring-1 ring-blue-600'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
-              <div className="p-2 rounded-lg bg-blue-100 text-blue-700">
+              <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300">
                 <BookOpen className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-sm font-bold text-slate-900 block">LITERASI</span>
-                <span className="text-[11px] text-slate-500 block leading-relaxed mt-0.5">
+                <span className="text-sm font-bold text-slate-900 dark:text-slate-100 block">LITERASI</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 block leading-relaxed mt-0.5">
                   Menemukan, memahami, menganalisis, mengevaluasi, &amp; merefleksikan ragam teks.
                 </span>
               </div>
@@ -330,16 +330,16 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               onClick={() => setDomain('Numerasi')}
               className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
                 domain === 'Numerasi'
-                  ? 'bg-emerald-50/70 border-emerald-600 ring-1 ring-emerald-600'
-                  : 'border-slate-200 hover:bg-slate-50'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-600 ring-1 ring-emerald-600'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
-              <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
+              <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300">
                 <Calculator className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-sm font-bold text-slate-900 block">NUMERASI</span>
-                <span className="text-[11px] text-slate-500 block leading-relaxed mt-0.5">
+                <span className="text-sm font-bold text-slate-900 dark:text-slate-100 block">NUMERASI</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 block leading-relaxed mt-0.5">
                   Bilangan, aljabar, geometri &amp; pengukuran, data, dan pemecahan masalah kontekstual.
                 </span>
               </div>
@@ -351,16 +351,16 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               onClick={() => setDomain('Literasi dan Numerasi')}
               className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
                 domain === 'Literasi dan Numerasi'
-                  ? 'bg-indigo-50/70 border-indigo-600 ring-1 ring-indigo-600'
-                  : 'border-slate-200 hover:bg-slate-50'
+                  ? 'bg-indigo-50/70 dark:bg-indigo-950/40 border-indigo-600 ring-1 ring-indigo-600'
+                  : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
-              <div className="p-2 rounded-lg bg-indigo-100 text-indigo-700">
+              <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300">
                 <Layers className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-sm font-bold text-slate-900 block">LITERASI &amp; NUMERASI</span>
-                <span className="text-[11px] text-slate-500 block leading-relaxed mt-0.5">
+                <span className="text-sm font-bold text-slate-900 dark:text-slate-100 block">LITERASI &amp; NUMERASI</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 block leading-relaxed mt-0.5">
                   Paket gabungan terintegrasi untuk asesmen komprehensif.
                 </span>
               </div>
@@ -370,7 +370,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
         {/* Row 3: Mode Generator */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-2">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
             4. Mode Generator Asesmen
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -383,8 +383,8 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                   onClick={() => setMode(m)}
                   className={`p-2.5 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
                     mode === m
-                      ? 'bg-slate-900 border-slate-900 text-white shadow-xs'
-                      : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                      ? 'bg-slate-900 dark:bg-indigo-600 border-slate-900 dark:border-indigo-600 text-white shadow-xs'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
                   {m}
@@ -392,10 +392,10 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               )
             )}
           </div>
-          <div className="mt-2 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
-            <Compass className="w-4 h-4 text-indigo-600 shrink-0" />
+          <div className="mt-2 p-3 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 flex items-center gap-2">
+            <Compass className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
             <div>
-              <span className="font-semibold text-slate-800 mr-1">
+              <span className="font-semibold text-slate-800 dark:text-slate-200 mr-1">
                 {modeDescriptions[mode].label}:
               </span>
               <span>{modeDescriptions[mode].desc}</span>
@@ -408,10 +408,10 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
           {/* Jumlah Soal */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                 5. Jumlah Soal
               </label>
-              <span className="text-[10px] font-medium text-emerald-600">
+              <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
                 Maksimal 50 Soal
               </span>
             </div>
@@ -428,7 +428,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                     jumlahSoal === num && !customJumlah
                       ? 'bg-indigo-600 border-indigo-600 text-white'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                   }`}
                 >
                   {num}
@@ -443,23 +443,23 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               placeholder="Atau masukkan jumlah khusus (1-50 butir)"
               value={customJumlah}
               onChange={(e) => setCustomJumlah(e.target.value)}
-              className="w-full text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
+              className="w-full text-xs px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
             />
-            <p className="text-[10px] text-slate-400 mt-1">
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
               Pilihan 40-50 nomor ideal untuk Tryout TKA, PAT, atau Ujian Sekolah.
             </p>
           </div>
 
           {/* Bentuk Soal */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               6. Bentuk Soal
             </label>
             <select
               id="select-bentuk-soal"
               value={bentukSoal}
               onChange={(e) => setBentukSoal(e.target.value as BentukSoal)}
-              className="w-full text-xs px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              className="w-full text-xs px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 dark:text-slate-200"
             >
               <option value="Pilihan Ganda">Pilihan Ganda (4 Opsi: A, B, C, D)</option>
               <option value="Pilihan Ganda Kompleks">Pilihan Ganda Kompleks</option>
@@ -469,21 +469,21 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
               <option value="Uraian">Uraian / Penalaran Bebas</option>
               <option value="Campuran">Campuran Beragam Bentuk</option>
             </select>
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
               Standar ANBK menitikberatkan pada Pilihan Ganda &amp; PG Kompleks.
             </p>
           </div>
 
           {/* Tingkat Kesulitan */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               7. Tingkat Kesulitan
             </label>
             <select
               id="select-tingkat-kesulitan"
               value={tingkatKesulitan}
               onChange={(e) => setTingkatKesulitan(e.target.value as TingkatKesulitan)}
-              className="w-full text-xs px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              className="w-full text-xs px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 dark:text-slate-200"
             >
               <option value="Campuran">Campuran (Mudah 30%, Sedang 40%, Sulit 30%)</option>
               <option value="Mudah">Mudah (Pengenalan &amp; Pemahaman Dasar)</option>
@@ -497,14 +497,14 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Level Kognitif */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               8. Level Kognitif
             </label>
             <select
               id="select-level-kognitif"
               value={levelKognitif}
               onChange={(e) => setLevelKognitif(e.target.value as LevelKognitif)}
-              className="w-full text-xs px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              className="w-full text-xs px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 dark:text-slate-200"
             >
               <option value="Campuran">Campuran Seluruh Level (L1 - L3)</option>
               <option value="Memahami">Memahami (Level 1: Menemukan &amp; Mengingat)</option>
@@ -517,14 +517,14 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
           {/* Konteks */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               9. Konteks Stimulus
             </label>
             <select
               id="select-konteks"
               value={konteks}
               onChange={(e) => setKonteks(e.target.value as Konteks)}
-              className="w-full text-xs px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              className="w-full text-xs px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 dark:text-slate-200"
             >
               <option value="Kehidupan sehari-hari">Kehidupan sehari-hari</option>
               <option value="Sekolah">Lingkungan Sekolah &amp; Belajar</option>
@@ -542,14 +542,14 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
           {/* Gaya Bahasa */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               10. Bahasa &amp; Kosakata
             </label>
             <select
               id="select-bahasa"
               value={bahasa}
               onChange={(e) => setBahasa(e.target.value as Bahasa)}
-              className="w-full text-xs px-3 py-2.5 border border-slate-200 rounded-lg bg-white focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800"
+              className="w-full text-xs px-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 font-medium text-slate-800 dark:text-slate-200"
             >
               <option value="Sesuai tingkat perkembangan siswa">
                 Sesuai tingkat perkembangan siswa ({jenjang})
@@ -562,7 +562,7 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
 
         {/* Topik Khusus (Opsional) */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             11. Fokus Topik Spesifik (Opsional)
           </label>
           <input
@@ -571,17 +571,17 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
             placeholder="Contoh: Ekosistem Hutan Mangrove, Daur Ulang Plastik, Pecahan Campuran, Tradisi Gotong Royong..."
             value={topikKhusus}
             onChange={(e) => setTopikKhusus(e.target.value)}
-            className="w-full text-xs px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-1 focus:ring-indigo-500 text-slate-800"
+            className="w-full text-xs px-3.5 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
           />
         </div>
 
         {/* 15 Prinsip Checklist Badge */}
-        <div className="p-4 bg-indigo-50/50 rounded-xl border border-indigo-100">
-          <div className="flex items-center gap-2 text-indigo-800 font-semibold text-xs mb-1.5">
-            <CheckCircle className="w-4 h-4 text-indigo-600" />
+        <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/40 rounded-xl border border-indigo-100 dark:border-indigo-900/60">
+          <div className="flex items-center gap-2 text-indigo-800 dark:text-indigo-300 font-semibold text-xs mb-1.5">
+            <CheckCircle className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             <span>Kepatuhan 15 Prinsip Pedagogis &amp; 10 Internal Quality Checks</span>
           </div>
-          <p className="text-[11px] text-indigo-900/80 leading-relaxed">
+          <p className="text-[11px] text-indigo-900/80 dark:text-indigo-200/80 leading-relaxed">
             Semua soal yang dihasilkan dijamin mengukur kompetensi nyata, bebas bias, distraktor
             berakar dari miskonsepsi siswa, dilengkapi stimulus kontekstual realistis, serta pembuktian
             pembahasan langkah demi langkah.

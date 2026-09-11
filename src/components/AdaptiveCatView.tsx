@@ -307,53 +307,53 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
 
       {/* Main Question Card */}
       {isLoading ? (
-        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center shadow-xs">
           <div className="w-8 h-8 border-3 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-sm font-semibold text-slate-700">
+          <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
             Mengkalibrasi &amp; Menghasilkan Soal Tingkat Selanjutnya...
           </p>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
             Menyesuaikan tingkat kognitif dan kesulitan terhadap capaian Anda.
           </p>
         </div>
       ) : currentSoal ? (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-7">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-7">
           {/* Metadata */}
-          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800 text-xs">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-md font-bold bg-indigo-50 text-indigo-700">
+              <span className="px-2.5 py-0.5 rounded-md font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300">
                 {currentSoal.domain}
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-medium">
+              <span className="px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium">
                 {currentSoal.subdomain}
               </span>
               <span
                 className={`px-2.5 py-0.5 rounded-md font-bold ${
                   currentSoal.kesulitan === 'Sulit'
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                    ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800'
                     : currentSoal.kesulitan === 'Sedang'
-                    ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                    : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
+                    : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
                 }`}
               >
                 Tingkat: {currentSoal.kesulitan}
               </span>
             </div>
-            <span className="text-slate-400">
-              Konteks: <strong>{currentSoal.konteks}</strong>
+            <span className="text-slate-400 dark:text-slate-500">
+              Konteks: <strong className="text-slate-700 dark:text-slate-300">{currentSoal.konteks}</strong>
             </span>
           </div>
 
           {/* Stimulus */}
           <div className="mb-4">
-            <div className="bg-slate-50 border-l-4 border-indigo-600 p-4 rounded-r-xl text-slate-800 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-serif">
+            <div className="bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-600 p-4 rounded-r-xl text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-serif">
               {currentSoal.stimulus}
             </div>
           </div>
 
           {/* Pertanyaan */}
           <div className="mb-5">
-            <p className="text-sm sm:text-base font-semibold text-slate-900 leading-snug">
+            <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 leading-snug">
               {currentSoal.pertanyaan}
             </p>
           </div>
@@ -364,16 +364,16 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
               {Object.entries(currentSoal.opsi).map(([huruf, teks]) => {
                 const isSelected = selectedOpsi === huruf;
                 const isCorrect = huruf === currentSoal.kunci;
-                let btnStyle = 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50';
+                let btnStyle = 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/60';
 
                 if (showExplanation) {
                   if (isCorrect) {
-                    btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-medium';
+                    btnStyle = 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-500 text-emerald-950 dark:text-emerald-200 font-medium';
                   } else if (isSelected && !isCorrect) {
-                    btnStyle = 'bg-rose-50 border-rose-500 text-rose-950';
+                    btnStyle = 'bg-rose-50 dark:bg-rose-950/50 border-rose-500 text-rose-950 dark:text-rose-200';
                   }
                 } else if (isSelected) {
-                  btnStyle = 'bg-indigo-50 border-indigo-600 text-indigo-950 font-medium ring-1 ring-indigo-600';
+                  btnStyle = 'bg-indigo-50 dark:bg-indigo-950/50 border-indigo-600 text-indigo-950 dark:text-indigo-200 font-medium ring-1 ring-indigo-600';
                 }
 
                 return (
@@ -390,17 +390,17 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
                           ? 'bg-emerald-600 text-white'
                           : isSelected
                           ? 'bg-indigo-600 text-white'
-                          : 'bg-slate-100 text-slate-700'
+                          : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       {huruf}
                     </span>
                     <span className="flex-1 leading-snug pt-0.5">{teks}</span>
                     {showExplanation && isCorrect && (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     )}
                     {showExplanation && isSelected && !isCorrect && (
-                      <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
                     )}
                   </button>
                 );
@@ -421,18 +421,18 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
               </button>
             </div>
           ) : (
-            <div className="pt-4 border-t border-slate-100 space-y-4">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
               <div
                 className={`p-3.5 rounded-xl border flex items-center gap-3 ${
                   selectedOpsi === currentSoal.kunci
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                    : 'bg-rose-50 border-rose-200 text-rose-900'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200'
+                    : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200'
                 }`}
               >
                 {selectedOpsi === currentSoal.kunci ? (
-                  <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
                 ) : (
-                  <XCircle className="w-6 h-6 text-rose-600 shrink-0" />
+                  <XCircle className="w-6 h-6 text-rose-600 dark:text-rose-400 shrink-0" />
                 )}
                 <div className="text-xs">
                   <span className="font-bold text-sm block">
@@ -449,22 +449,22 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
               </div>
 
               {/* Pembahasan */}
-              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
-                <span className="font-bold text-slate-800 block mb-1">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+                <span className="font-bold text-slate-800 dark:text-slate-200 block mb-1">
                   Langkah Pembahasan &amp; Pembuktian:
                 </span>
-                <p className="text-slate-700 whitespace-pre-line leading-relaxed">
+                <p className="text-slate-700 dark:text-slate-300 whitespace-pre-line leading-relaxed">
                   {currentSoal.pembahasan}
                 </p>
               </div>
 
               {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
-              <div className="p-3.5 bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-xl border border-amber-200/90 text-xs shadow-2xs">
-                <div className="flex items-center gap-2 text-amber-900 font-bold mb-1.5">
-                  <Zap className="w-4 h-4 text-amber-600 fill-amber-500 shrink-0" />
+              <div className="p-3.5 bg-linear-to-r from-amber-50 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/30 rounded-xl border border-amber-200/90 dark:border-amber-800/80 text-xs shadow-2xs">
+                <div className="flex items-center gap-2 text-amber-900 dark:text-amber-300 font-bold mb-1.5">
+                  <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 fill-amber-500 shrink-0" />
                   <span>Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</span>
                 </div>
-                <p className="text-amber-950 font-medium leading-relaxed bg-white/95 p-3 rounded-lg border border-amber-200 shadow-2xs">
+                <p className="text-amber-950 dark:text-amber-200 font-medium leading-relaxed bg-white/95 dark:bg-slate-900/95 p-3 rounded-lg border border-amber-200 dark:border-amber-800/80 shadow-2xs">
                   {getFallbackTipsTrik(currentSoal)}
                 </p>
               </div>

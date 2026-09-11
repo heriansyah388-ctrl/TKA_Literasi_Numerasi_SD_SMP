@@ -405,7 +405,7 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-100/60 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-100/60 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
       {/* Toast Notification */}
       {notification && (
         <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-slate-800 flex items-center gap-2 animate-slideUp">
@@ -452,19 +452,19 @@ export default function App() {
         {activeTab === 'soal_list' && (
           <div className="max-w-5xl mx-auto px-4">
             {/* Packet Info Banner */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs p-5 sm:p-6 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2 text-xs font-semibold text-indigo-600 mb-1">
+                <div className="flex items-center gap-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 mb-1">
                   <span>{currentPaket.metadata?.jenjang}</span>
                   <span>•</span>
                   <span>{currentPaket.metadata?.kelas}</span>
                   <span>•</span>
                   <span>Mode: {currentPaket.metadata?.mode}</span>
                 </div>
-                <h2 className="text-xl font-bold text-slate-900 leading-tight">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 leading-tight">
                   {currentPaket.metadata?.judul || 'Daftar Butir Soal Asesmen Terpilih'}
                 </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                   Total {currentPaket.soal.length} butir soal • Alokasi waktu standar: ~
                   {Math.round(currentPaket.metadata?.waktu_menit || currentPaket.soal.length * 2.5)} menit
                 </p>
@@ -474,10 +474,10 @@ export default function App() {
                 <button
                   id="btn-share-link-banner"
                   onClick={() => setIsShareModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
                   title="Dapatkan link langsung ujian CBT untuk dibagikan ke siswa"
                 >
-                  <Share2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <Share2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Bagikan Link Siswa</span>
                 </button>
 
@@ -487,10 +487,10 @@ export default function App() {
                     exportToWordDoc(currentPaket.metadata, currentPaket.soal, 'siswa');
                     showToast('Naskah Siswa berhasil diunduh dalam format Word (.doc)!');
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
                   title="Simpan naskah soal ujian siswa ke format Microsoft Word (.doc)"
                 >
-                  <FileText className="w-3.5 h-3.5 text-blue-600" />
+                  <FileText className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                   <span>Simpan DOC Siswa</span>
                 </button>
 
@@ -500,10 +500,10 @@ export default function App() {
                     exportToWordDoc(currentPaket.metadata, currentPaket.soal, 'guru');
                     showToast('Naskah Pegangan Guru berhasil diunduh dalam format Word (.doc)!');
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
                   title="Simpan dokumen pegangan guru beserta pembahasan dan rubrik ke Word (.doc)"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
+                  <BookOpen className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                   <span>Simpan DOC Guru</span>
                 </button>
 
@@ -519,9 +519,9 @@ export default function App() {
             </div>
 
             {/* Filter & Search Bar */}
-            <div className="bg-white rounded-xl border border-slate-200 p-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-3 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1.5 text-slate-500 font-medium">
+                <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-medium">
                   <Filter className="w-3.5 h-3.5" />
                   <span>Filter:</span>
                 </div>
@@ -530,7 +530,7 @@ export default function App() {
                 <select
                   value={domainFilter}
                   onChange={(e) => setDomainFilter(e.target.value as any)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-medium text-slate-700 focus:outline-hidden"
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-200 focus:outline-hidden"
                 >
                   <option value="All">Semua Domain</option>
                   <option value="Literasi">Literasi Saja</option>
@@ -541,7 +541,7 @@ export default function App() {
                 <select
                   value={difficultyFilter}
                   onChange={(e) => setDifficultyFilter(e.target.value as any)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-medium text-slate-700 focus:outline-hidden"
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-medium text-slate-700 dark:text-slate-200 focus:outline-hidden"
                 >
                   <option value="All">Semua Kesulitan</option>
                   <option value="Mudah">Mudah</option>
@@ -558,14 +558,14 @@ export default function App() {
                   placeholder="Cari teks stimulus, pertanyaan..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 text-xs"
+                  className="w-full pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:ring-1 focus:ring-indigo-500 text-xs"
                 />
               </div>
             </div>
 
             {/* List of Questions */}
             {filteredSoal.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-xs text-slate-500">
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-12 text-center text-xs text-slate-500 dark:text-slate-400">
                 Tidak ada butir soal yang sesuai dengan kriteria filter saat ini.
               </div>
             ) : (
@@ -622,10 +622,10 @@ export default function App() {
                 onPrint={() => window.print()}
               />
             ) : (
-              <div className="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 p-8 text-center shadow-xs">
-                <Info className="w-10 h-10 text-indigo-600 mx-auto mb-3" />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Belum Ada Hasil Ujian</h3>
-                <p className="text-xs text-slate-500 mb-5">
+              <div className="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center shadow-xs">
+                <Info className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mx-auto mb-3" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">Belum Ada Hasil Ujian</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-5">
                   Selesaikan simulasi CBT atau tes adaptif untuk melihat laporan profil kompetensi dan
                   rekomendasi belajar siswa.
                 </p>
@@ -643,18 +643,18 @@ export default function App() {
       </main>
 
       {/* Footer / Identitas Pengembang */}
-      <footer className="mt-16 border-t border-slate-200 bg-white py-6 px-4 print:hidden">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <footer className="mt-16 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 px-4 print:hidden transition-colors duration-200">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
           <div className="flex items-center gap-2">
-            <GraduationCap className="w-4 h-4 text-indigo-600" />
-            <span className="font-semibold text-slate-800">TKA Literasi &amp; Numerasi SD &amp; SMP</span>
+            <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+            <span className="font-semibold text-slate-800 dark:text-slate-200">TKA Literasi &amp; Numerasi SD &amp; SMP</span>
             <span>•</span>
             <span>Kurikulum Nasional</span>
           </div>
           <div className="text-center sm:text-right">
-            <span className="text-slate-500">Pengembang: </span>
-            <strong className="text-slate-900 font-semibold">Heriansyah., S.Si., S.Pd., M.Pd</strong>{' '}
-            <span className="text-indigo-700 font-medium">(Pengawas Satuan Pendidikan Disdikbud Sidrap)</span>
+            <span className="text-slate-500 dark:text-slate-400">Pengembang: </span>
+            <strong className="text-slate-900 dark:text-slate-100 font-semibold">Heriansyah., S.Si., S.Pd., M.Pd</strong>{' '}
+            <span className="text-indigo-700 dark:text-indigo-400 font-medium">(Pengawas Satuan Pendidikan Disdikbud Sidrap)</span>
           </div>
         </div>
       </footer>
