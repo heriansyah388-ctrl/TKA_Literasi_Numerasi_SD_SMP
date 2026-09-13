@@ -121,6 +121,10 @@ export const GeneratorForm: React.FC<GeneratorFormProps> = ({
       label: 'Mode 6: Asesmen Adaptif (CAT)',
       desc: 'Menghasilkan butir uji yang siap dieksekusi dengan Computerized Adaptive Testing secara dinamis.',
     },
+    REMEDIAL: {
+      label: 'Mode 7: Remedial Terarah',
+      desc: 'Paket tindak lanjut khusus menuntaskan butir soal yang belum dikuasai siswa.',
+    },
   };
 
   return (

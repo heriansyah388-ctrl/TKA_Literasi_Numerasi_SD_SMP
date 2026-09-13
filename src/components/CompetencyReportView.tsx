@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Award,
   CheckCircle2,
@@ -14,26 +14,47 @@ import {
   RotateCcw,
   Sparkles,
   Zap,
+  User,
+  GraduationCap,
+  CreditCard,
+  FileText,
+  Layers,
+  HelpCircle,
 } from 'lucide-react';
-import { AnalisisHasil, SoalItem, JawabanSiswaMap } from '../types';
+import { AnalisisHasil, SoalItem, JawabanSiswaMap, PaketSoalResponse, PaketSoalMetadata } from '../types';
 import { checkJawaban, formatJawabanSiswa, formatKunciJawaban } from '../utils/soalFormatHelper';
 import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
+import { TipsTrikCard } from './TipsTrikCard';
+import { generatePaketRemedial, exportRemedialToWordDoc } from '../utils/remedialHelper';
+import { RemedialPackageModal } from './RemedialPackageModal';
 
 interface CompetencyReportViewProps {
   analisis: AnalisisHasil;
   soalList: SoalItem[];
   jawabanSiswa: JawabanSiswaMap;
+  metadataAsal?: PaketSoalMetadata;
   onUlangiTes: () => void;
   onPrint: () => void;
+  onGenerateRemedial?: (paketRemedial: PaketSoalResponse) => void;
+  onStartRemedialExam?: (paketRemedial: PaketSoalResponse) => void;
 }
 
 export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
   analisis,
   soalList,
   jawabanSiswa,
+  metadataAsal,
   onUlangiTes,
   onPrint,
+  onGenerateRemedial,
+  onStartRemedialExam,
 }) => {
+  const [isRemedialModalOpen, setIsRemedialModalOpen] = useState(false);
+
+  // Generate remedial report from current results
+  const remedialReport = React.useMemo(() => {
+    return generatePaketRemedial(soalList, jawabanSiswa, metadataAsal, analisis.identitasSiswa);
+  }, [soalList, jawabanSiswa, metadataAsal, analisis.identitasSiswa]);
   const {
     totalSoal,
     benar,
@@ -91,7 +112,21 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Tombol Paket Remedial Otomatis */}
+            {remedialReport && remedialReport.jumlahSalah > 0 && (
+              <button
+                id="btn-open-remedial-modal"
+                type="button"
+                onClick={() => setIsRemedialModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-700 hover:to-rose-700 transition-all shadow-xs cursor-pointer animate-pulse"
+                title="Buka Paket Remedial Otomatis untuk mengintervensi butir soal yang dijawab salah oleh siswa"
+              >
+                <Sparkles className="w-4 h-4 text-amber-200" />
+                <span>Paket Remedial ({remedialReport.jumlahSalah} Soal)</span>
+              </button>
+            )}
+
             <button
               onClick={onPrint}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer"
@@ -108,6 +143,45 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
             </button>
           </div>
         </div>
+
+        {/* Identitas Siswa Banner if available */}
+        {analisis.identitasSiswa?.nama && (
+          <div className="mt-5 p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-800/60 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-600 dark:bg-indigo-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                <User className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold text-indigo-700 dark:text-indigo-400 uppercase tracking-wider block">
+                  Identitas Peserta Asesmen
+                </span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  {analisis.identitasSiswa.nama}
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 text-slate-700 dark:text-slate-300 shadow-2xs">
+                <GraduationCap className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                <span className="text-slate-500 dark:text-slate-400">Kelas:</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">
+                  {analisis.identitasSiswa.kelas}
+                </span>
+              </div>
+
+              {analisis.identitasSiswa.nis && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 text-slate-700 dark:text-slate-300 shadow-2xs">
+                  <CreditCard className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span className="text-slate-500 dark:text-slate-400">NIS:</span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">
+                    {analisis.identitasSiswa.nis}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Score & Metric Summary */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
@@ -333,6 +407,53 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
             <span className="text-sm font-bold text-white">{tingkatKesulitanBerikutnya}</span>
           </div>
         </div>
+
+        {/* Tindak Lanjut: Paket Remedial Otomatis Callout */}
+        {remedialReport && remedialReport.jumlahSalah > 0 && (
+          <div className="mt-4 p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-rose-500/10 dark:from-amber-950/40 dark:via-orange-950/30 dark:to-rose-950/30 border-2 border-dashed border-amber-300 dark:border-amber-700/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-rose-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                <RotateCcw className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 text-[11px] font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                  <span>TINDAK LANJUT BERDIFERENSIASI</span>
+                </div>
+                <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100">
+                  Paket Remedial Otomatis Siap Digunakan ({remedialReport.jumlahSalah} Butir Soal Terisolasi)
+                </h4>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                  Sistem telah mengidentifikasi {remedialReport.jumlahSalah} butir soal yang dijawab salah oleh siswa. 
+                  Anda dapat meninjau matriks miskonsepsi, mencetak lembar remedial Word (.doc), atau langsung memulai ujian perbaikan khusus butir tersebut.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                id="btn-remedial-callout-view"
+                type="button"
+                onClick={() => setIsRemedialModalOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-700 hover:to-rose-700 text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-200" />
+                <span>Buka Paket Remedial</span>
+              </button>
+
+              <button
+                id="btn-remedial-callout-doc"
+                type="button"
+                onClick={() => exportRemedialToWordDoc(remedialReport)}
+                className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs shadow-2xs transition-colors cursor-pointer"
+                title="Unduh langsung naskah remedial format Microsoft Word"
+              >
+                <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <span>Unduh .DOC</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Review Soal Siswa */}
@@ -418,20 +539,35 @@ export const CompetencyReportView: React.FC<CompetencyReportViewProps> = ({
                 </div>
 
                 {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
-                <div className="mt-2.5 p-3 bg-gradient-to-r from-amber-50 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/30 rounded-xl border border-amber-200 dark:border-amber-800/80 text-xs text-amber-950 dark:text-amber-200 shadow-2xs">
-                  <strong className="text-amber-900 dark:text-amber-300 flex items-center gap-1.5 mb-1">
-                    <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 fill-amber-500 dark:fill-amber-400 shrink-0" />
-                    Tips &amp; Trik Cepat Menjawab Soal TKA Ini:
-                  </strong>
-                  <p className="whitespace-pre-line leading-relaxed bg-white/95 dark:bg-slate-800/95 p-2.5 rounded-lg border border-amber-200/80 dark:border-amber-700/60 shadow-2xs text-slate-800 dark:text-slate-200">
-                    {getFallbackTipsTrik(soal)}
-                  </p>
+                <div className="mt-3">
+                  <TipsTrikCard soal={soal} defaultExpanded={true} />
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+
+      {/* Modal Paket Remedial Otomatis */}
+      {remedialReport && (
+        <RemedialPackageModal
+          report={remedialReport}
+          isOpen={isRemedialModalOpen}
+          onClose={() => setIsRemedialModalOpen(false)}
+          onSetAsActivePacket={(paket) => {
+            if (onGenerateRemedial) {
+              onGenerateRemedial(paket);
+            }
+          }}
+          onStartExamNow={(paket) => {
+            if (onStartRemedialExam) {
+              onStartRemedialExam(paket);
+            } else if (onGenerateRemedial) {
+              onGenerateRemedial(paket);
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

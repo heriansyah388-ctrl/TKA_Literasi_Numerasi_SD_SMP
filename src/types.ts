@@ -49,7 +49,8 @@ export type ModeGenerator =
   | 'DIAGNOSTIK'
   | 'HOTS'
   | 'SIMULASI'
-  | 'ADAPTIF';
+  | 'ADAPTIF'
+  | 'REMEDIAL';
 
 export type EngineSumber = 'gemini' | 'bank_kurasi';
 
@@ -80,6 +81,20 @@ export interface RubrikAnalitik {
   kriteria: KriteriaRubrik[];
 }
 
+export interface VisualDiagramData {
+  tipe: 'diagram_batang' | 'tabel' | 'infografis' | 'perbandingan';
+  judul?: string;
+  satuan?: string;
+  catatan?: string;
+  // Untuk diagram batang
+  batang?: Array<{ label: string; nilai: number; unit?: string; warna?: string }>;
+  // Untuk tabel data
+  kolom?: string[];
+  baris?: Array<string[]>;
+  // Untuk infografis metriks
+  poinInfografis?: Array<{ label: string; nilai: string | number; sublabel?: string; icon?: string }>;
+}
+
 export interface SoalItem {
   id: string;
   jenjang?: Jenjang;
@@ -93,6 +108,7 @@ export interface SoalItem {
   kesulitan: 'Mudah' | 'Sedang' | 'Sulit';
   bentuk_soal: BentukSoal;
   stimulus: string;
+  stimulus_visual?: VisualDiagramData;
   pertanyaan: string;
   opsi?: Record<string, string>; // For PG: { A: "...", B: "...", C: "...", D: "..." }
   pernyataan_kompleks?: Array<{ id: string; teks: string; kunci: string | boolean }>; // For PGK or Benar/Salah
@@ -121,6 +137,12 @@ export interface PaketSoalMetadata {
   mode?: ModeGenerator;
   judul?: string;
   waktu_menit?: number;
+}
+
+export interface IdentitasSiswa {
+  nama: string;
+  kelas: string;
+  nis: string;
 }
 
 export interface PaketSoalResponse {
@@ -156,6 +178,7 @@ export interface AnalisisHasil {
   persentase: number;
   kategori: KategoriKemampuan;
   durasiDetik: number;
+  identitasSiswa?: IdentitasSiswa;
   literasiScores: SubdomainScore[];
   numerasiScores: SubdomainScore[];
   kompetensiDikuasai: string[];
@@ -164,4 +187,23 @@ export interface AnalisisHasil {
   rekomendasiMateri: string[];
   rekomendasiLatihanBerikutnya: string;
   tingkatKesulitanBerikutnya: 'Mudah' | 'Sedang' | 'Sulit';
+}
+
+export interface RekapNilaiSiswa {
+  id: string;
+  timestamp: number;
+  tanggalStr: string;
+  paketJudul: string;
+  identitas: IdentitasSiswa;
+  totalSoal: number;
+  benar: number;
+  salah: number;
+  skor: number;
+  persentase: number;
+  kategori: KategoriKemampuan;
+  durasiDetik: number;
+  literasiBenar?: number;
+  literasiTotal?: number;
+  numerasiBenar?: number;
+  numerasiTotal?: number;
 }

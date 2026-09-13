@@ -9,6 +9,7 @@ import { PrintableView } from './components/PrintableView';
 import { JsonModal } from './components/JsonModal';
 import { ShareLinkModal } from './components/ShareLinkModal';
 import { BankKurasiCatalog } from './components/BankKurasiCatalog';
+import { RekapNilaiKelasView } from './components/RekapNilaiKelasView';
 import { DEFAULT_SOAL_BANK } from './data/defaultBank';
 import {
   PaketSoalResponse,
@@ -27,9 +28,11 @@ import {
   Bahasa,
   ModeGenerator,
   EngineSumber,
+  IdentitasSiswa,
 } from './types';
 import { checkJawaban } from './utils/soalFormatHelper';
 import { exportToWordDoc } from './utils/exportDocHelper';
+import { getRekapNilaiList, saveRekapNilai } from './utils/rekapNilaiHelper';
 import {
   Play,
   BookOpen,
@@ -49,14 +52,22 @@ import {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi'
+    'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai'
   >(() => {
     try {
       if (typeof window !== 'undefined') {
         const params = new URLSearchParams(window.location.search);
         const mode = params.get('tab') || params.get('mode');
-        if (mode === 'cbt' || mode === 'cat' || mode === 'soal_list' || mode === 'bank_kurasi' || mode === 'generator') {
-          return mode as 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi';
+        if (
+          mode === 'cbt' ||
+          mode === 'cat' ||
+          mode === 'soal_list' ||
+          mode === 'bank_kurasi' ||
+          mode === 'generator' ||
+          mode === 'rekap_nilai' ||
+          mode === 'laporan'
+        ) {
+          return mode as 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai';
         }
       }
     } catch {
@@ -96,6 +107,13 @@ export default function App() {
   // Test state
   const [jawabanSiswa, setJawabanSiswa] = useState<JawabanSiswaMap>({});
   const [analisisHasil, setAnalisisHasil] = useState<AnalisisHasil | null>(null);
+  const [totalRekapCount, setTotalRekapCount] = useState<number>(() => {
+    try {
+      return getRekapNilaiList().length;
+    } catch {
+      return 0;
+    }
+  });
 
   // Filter & Search in Soal List
   const [domainFilter, setDomainFilter] = useState<'All' | 'Literasi' | 'Numerasi'>('All');
@@ -227,7 +245,11 @@ export default function App() {
   };
 
   // Process CBT Exam Submission
-  const handleSubmitExam = async (jawaban: JawabanSiswaMap, durasiDetik: number) => {
+  const handleSubmitExam = async (
+    jawaban: JawabanSiswaMap,
+    durasiDetik: number,
+    identitas?: IdentitasSiswa
+  ) => {
     setJawabanSiswa(jawaban);
     const soalItems = currentPaket.soal;
 
@@ -354,9 +376,40 @@ export default function App() {
           aiFeedback.rekomendasiLatihanBerikutnya ||
           'Tingkatkan latihan soal pemecahan masalah (Problem Solving) kontekstual.',
         tingkatKesulitanBerikutnya: aiFeedback.tingkatKesulitanBerikutnya || (skor >= 75 ? 'Sulit' : 'Sedang'),
+        identitasSiswa: identitas,
       };
 
       setAnalisisHasil(finalAnalisis);
+
+      // Otomatis catat ke Rekap Nilai Kelas (Leger Siswa)
+      if (identitas?.nama) {
+        try {
+          const litBenar = literasiScores.reduce((acc, curr) => acc + curr.benar, 0);
+          const litTotal = literasiScores.reduce((acc, curr) => acc + curr.totalSoal, 0);
+          const numBenar = numerasiScores.reduce((acc, curr) => acc + curr.benar, 0);
+          const numTotal = numerasiScores.reduce((acc, curr) => acc + curr.totalSoal, 0);
+
+          saveRekapNilai({
+            paketJudul: currentPaket.metadata?.judul || 'Simulasi Asesmen CBT',
+            identitas,
+            totalSoal: total,
+            benar,
+            salah,
+            skor,
+            persentase: skor,
+            kategori: getKategori(skor),
+            durasiDetik,
+            literasiBenar: litBenar,
+            literasiTotal: litTotal,
+            numerasiBenar: numBenar,
+            numerasiTotal: numTotal,
+          });
+          setTotalRekapCount(getRekapNilaiList().length);
+        } catch (errRekap) {
+          console.error('Gagal mencatat rekap:', errRekap);
+        }
+      }
+
       setActiveTab('laporan');
     } catch (e) {
       console.error('Analysis failed:', e);
@@ -371,6 +424,7 @@ export default function App() {
         durasiDetik,
         literasiScores,
         numerasiScores,
+        identitasSiswa: identitas,
         kompetensiDikuasai: ['Membaca teks stimulus dan menyelesaikan soal pemahaman dasar.'],
         kompetensiPerluPenguatan: ['Pemeriksaan kembali langkah perhitungan dan evaluasi bukti teks.'],
         analisisKesalahan: ['Kurang teliti memperhatikan satuan dan kata kunci pertanyaan.'],
@@ -379,12 +433,50 @@ export default function App() {
         tingkatKesulitanBerikutnya: skor >= 80 ? 'Sulit' : 'Sedang',
       };
       setAnalisisHasil(fallbackAnalisis);
+
+      if (identitas?.nama) {
+        try {
+          saveRekapNilai({
+            paketJudul: currentPaket.metadata?.judul || 'Simulasi Asesmen CBT',
+            identitas,
+            totalSoal: total,
+            benar,
+            salah,
+            skor,
+            persentase: skor,
+            kategori: getKategori(skor),
+            durasiDetik,
+          });
+          setTotalRekapCount(getRekapNilaiList().length);
+        } catch (errRekap) {
+          console.error('Gagal mencatat rekap:', errRekap);
+        }
+      }
+
       setActiveTab('laporan');
     }
   };
 
   const handleFinishCat = (hasil: AnalisisHasil) => {
     setAnalisisHasil(hasil);
+    if (hasil.identitasSiswa?.nama) {
+      try {
+        saveRekapNilai({
+          paketJudul: 'Asesmen Adaptif (CAT)',
+          identitas: hasil.identitasSiswa,
+          totalSoal: hasil.totalSoal,
+          benar: hasil.benar,
+          salah: hasil.salah,
+          skor: hasil.skor,
+          persentase: hasil.persentase,
+          kategori: hasil.kategori,
+          durasiDetik: hasil.durasiDetik,
+        });
+        setTotalRekapCount(getRekapNilaiList().length);
+      } catch (errRekap) {
+        console.error('Gagal mencatat rekap CAT:', errRekap);
+      }
+    }
     setActiveTab('laporan');
   };
 
@@ -420,6 +512,7 @@ export default function App() {
         setActiveTab={setActiveTab}
         totalSoal={currentPaket.soal.length}
         totalBankKurasi={bankKurasiCount}
+        totalRekapCount={totalRekapCount}
         onPrintStudent={() => setPrintMode('siswa')}
         onPrintTeacher={() => setPrintMode('guru')}
         onExportDocStudent={() => {
@@ -595,6 +688,7 @@ export default function App() {
             soalList={currentPaket.soal}
             judul={currentPaket.metadata?.judul}
             waktuMenit={Math.round(currentPaket.metadata?.waktu_menit || currentPaket.soal.length * 2.5)}
+            initialKelas={currentPaket.metadata?.kelas}
             onSubmitExam={handleSubmitExam}
             onCancel={() => setActiveTab('soal_list')}
           />
@@ -618,8 +712,19 @@ export default function App() {
                 analisis={analisisHasil}
                 soalList={currentPaket.soal}
                 jawabanSiswa={jawabanSiswa}
+                metadataAsal={currentPaket.metadata}
                 onUlangiTes={() => setActiveTab('cbt')}
                 onPrint={() => window.print()}
+                onGenerateRemedial={(paketRemedial) => {
+                  setCurrentPaket(paketRemedial);
+                  setActiveTab('soal_list');
+                  showToast(`Paket Remedial (${paketRemedial.soal.length} butir) berhasil dimuat sebagai Paket Aktif!`);
+                }}
+                onStartRemedialExam={(paketRemedial) => {
+                  setCurrentPaket(paketRemedial);
+                  setActiveTab('cbt');
+                  showToast(`Memulai Simulasi CBT Remedial untuk ${paketRemedial.metadata.judul}`);
+                }}
               />
             ) : (
               <div className="max-w-md mx-auto bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center shadow-xs">
@@ -639,6 +744,24 @@ export default function App() {
               </div>
             )}
           </div>
+        )}
+
+        {/* TAB 6: Rekap Nilai Kelas & Tindak Lanjut Leger */}
+        {activeTab === 'rekap_nilai' && (
+          <RekapNilaiKelasView
+            onBackToExam={() => setActiveTab('cbt')}
+            soalList={currentPaket.soal}
+            onSetAsActivePacket={(pkt) => {
+              setCurrentPaket(pkt);
+              setActiveTab('soal_list');
+              showToast(`Paket Remedial siswa berhasil dimuat sebagai Paket Aktif (${pkt.soal.length} butir soal).`);
+            }}
+            onStartExamNow={(pkt) => {
+              setCurrentPaket(pkt);
+              setActiveTab('cbt');
+              showToast(`Memulai sesi ujian remedial siswa (${pkt.soal.length} butir soal).`);
+            }}
+          />
         )}
       </main>
 

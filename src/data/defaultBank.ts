@@ -81,6 +81,17 @@ export const DEFAULT_SOAL_BANK: SoalItem[] = [
     kesulitan: 'Sulit',
     bentuk_soal: 'Pilihan Ganda',
     stimulus: `Keluarga Pak Budi mencatat penggunaan air selama musim kemarau. Menutup keran saat menggosok gigi terbukti menghemat 6 liter air per menit. Sebelum menerapkan kebiasaan ini, tagihan air keluarga Pak Budi mencapai 25 meter kubik per bulan. Setelah seluruh anggota keluarga terbiasa mandi menggunakan pancuran (shower) bertekanan rendah dan selalu menutup keran saat menyabuni tangan, pemakaian air turun menjadi 16 meter kubik per bulan. Ibu Budi berpendapat bahwa kebiasaan hemat air ini merupakan cara paling mudah menyelamatkan bumi yang patut dicontoh semua orang.`,
+    stimulus_visual: {
+      tipe: 'infografis',
+      judul: 'Infografis Pemantauan Penghematan Air Keluarga Mandiri',
+      catatan: 'Catatan Meteran Air Bersih Rumah Tangga (m³ / Bulan)',
+      poinInfografis: [
+        { label: 'Sebelum Hemat Air', nilai: '25 m³', sublabel: 'Tagihan per Bulan' },
+        { label: 'Sesudah Hemat Air', nilai: '16 m³', sublabel: 'Gunakan Shower Hemat' },
+        { label: 'Volume Dihemat', nilai: '9 m³', sublabel: 'Penurunan Riil (Fakta)' },
+        { label: 'Keran Gosok Gigi', nilai: '6 Liter', sublabel: 'Dihemat per Menit' }
+      ]
+    },
     pertanyaan: 'Manakah pernyataan berikut yang merupakan FAKTA yang dapat dibuktikan dari teks di atas?',
     opsi: {
       A: 'Hemat air adalah satu-satunya cara paling mudah untuk menyelamatkan kelestarian bumi.',
@@ -188,6 +199,19 @@ export const DEFAULT_SOAL_BANK: SoalItem[] = [
 - Kamis: 30 buku
 - Jumat: 45 buku
 Pengurus koperasi menargetkan rata-rata penjualan per hari minimal 40 buku agar mendapatkan potongan harga dari distributor buku.`,
+    stimulus_visual: {
+      tipe: 'diagram_batang',
+      judul: 'Diagram Batang Penjualan Buku Tulis Harian Koperasi Sekolah',
+      satuan: 'Buku',
+      catatan: 'Laporan Penjualan Mingguan Koperasi Siswa',
+      batang: [
+        { label: 'Senin', nilai: 35, unit: 'buku', warna: 'bg-blue-500' },
+        { label: 'Selasa', nilai: 40, unit: 'buku', warna: 'bg-indigo-500' },
+        { label: 'Rabu', nilai: 50, unit: 'buku', warna: 'bg-emerald-500' },
+        { label: 'Kamis', nilai: 30, unit: 'buku', warna: 'bg-amber-500' },
+        { label: 'Jumat', nilai: 45, unit: 'buku', warna: 'bg-purple-500' }
+      ]
+    },
     pertanyaan: 'Berdasarkan data tersebut, berapakah rata-rata penjualan buku tulis per hari dan apakah target koperasi tercapai?',
     opsi: {
       A: 'Rata-rata 38 buku per hari, target belum tercapai.',
@@ -327,7 +351,19 @@ Pengurus koperasi menargetkan rata-rata penjualan per hari minimal 40 buku agar 
 - Biaya dasar pengemasan dan administrasi tetap: Rp15.000,00 per paket.
 - Biaya tambahan per kilogram berat barang: Rp8.000,00/kg.
 Andi mengirim sebuah paket buku bacaan untuk perpustakaan desa dan membayar total biaya sebesar Rp71.000,00.`,
-    pertanyaan: 'Berapakah berat paket buku yang dikirim oleh Andi tersebut?',
+    stimulus_visual: {
+      tipe: 'tabel',
+      judul: 'Struktur Skema Tarif Layanan Kilat Express Antarkota',
+      satuan: 'Rupiah (IDR)',
+      catatan: 'Tarif Reguler Ekspedisi Logistik Darat 2026',
+      kolom: ['Komponen Biaya Pengiriman', 'Besaran Tarif', 'Ketentuan Penerapan'],
+      baris: [
+        ['Biaya Administrasi & Kemasan', 'Rp15.000,00', 'Biaya tetap sekali per paket'],
+        ['Tarif Berat Barang (Variabel)', 'Rp8.000,00 / kg', 'Dihitung proporsional per kilogram'],
+        ['Total Pembayaran Paket Andi', 'Rp71.000,00', 'Total nominal yang dibayarkan di kasir']
+      ]
+    },
+    pertanyaan: 'Berapakah berat paket buku ($x$) yang dikirim oleh Andi tersebut?',
     opsi: {
       A: '5 kg',
       B: '6 kg',
@@ -335,7 +371,7 @@ Andi mengirim sebuah paket buku bacaan untuk perpustakaan desa dan membayar tota
       D: '8 kg'
     },
     kunci: 'C',
-    pembahasan: 'Langkah pemecahan masalah aljabar:\n1. Misalkan berat paket = x kg.\n2. Bentuk model persamaan: Total Biaya = Biaya Tetap + (Tarif/kg × x)\n   71.000 = 15.000 + 8.000x\n3. Kurangkan kedua ruas dengan 15.000:\n   8.000x = 71.000 - 15.000\n   8.000x = 56.000\n4. Nilai x = 56.000 ÷ 8.000 = 7 kg.\nJadi berat paket buku adalah 7 kg.',
+    pembahasan: 'Langkah pemecahan masalah model aljabar:\n1. Misalkan berat paket = $x\\text{ kg}$.\n2. Bentuk model persamaan linear satu variabel (PLSV):\n   $$\\text{Total Biaya} = \\text{Biaya Tetap} + (\\text{Tarif/kg} \\times x)$$\n   $$71.000 = 15.000 + 8.000x$$\n3. Kurangkan kedua ruas dengan $15.000$:\n   $$8.000x = 71.000 - 15.000$$\n   $$8.000x = 56.000$$\n4. Selesaikan nilai $x$:\n   $$x = \\frac{56.000}{8.000} = 7\\text{ kg}$$\nJadi berat paket buku yang dikirim Andi adalah $7\\text{ kg}$.',
     tips_trik: 'Trik Cepat (Operasi Mundur): Kurangkan dulu total biaya dengan biaya tetap: Rp71.000 - Rp15.000 = Rp56.000. Lalu bagi dengan tarif per kg: 56.000 ÷ 8.000 = 7 kg. Dalam hitungan detik Anda mendapatkan angka 7 tanpa perlu menyusun aljabar rumit.',
     indikator: 'Siswa mampu memodelkan masalah kontekstual ke dalam persamaan linear satu variabel dan menyelesaikannya.',
     tag: ['Numerasi', 'Aljabar', 'SMP 7', 'PLSV'],
@@ -360,7 +396,18 @@ Andi mengirim sebuah paket buku bacaan untuk perpustakaan desa dan membayar tota
     kesulitan: 'Sedang',
     bentuk_soal: 'Pilihan Ganda',
     stimulus: `Regu pemadam kebakaran menempatkan tangga darurat untuk menjangkau jendela lantai dua gedung yang berada pada ketinggian 12 meter dari permukaan tanah datar. Sesuai standar keselamatan ergonomi, jarak aman antara kaki tangga di tanah dengan dinding gedung harus tepat 5 meter agar tangga tidak tergelincir atau terlalu tegak.`,
-    pertanyaan: 'Berapakah panjang minimum tangga darurat yang dibutuhkan regu penyelamat tersebut?',
+    stimulus_visual: {
+      tipe: 'infografis',
+      judul: 'Spesifikasi Ergonomi Penempatan Tangga Penyelamat',
+      catatan: 'Pedoman Keselamatan Pemadam Kebakaran & Evakuasi Gedung',
+      poinInfografis: [
+        { label: 'Tinggi Jendela (a)', nilai: '12 meter', sublabel: 'Tegak Lurus Dinding' },
+        { label: 'Jarak Kaki Tangga (b)', nilai: '5 meter', sublabel: 'Jarak Aman Landasan' },
+        { label: 'Sudut Bidang Datar', nilai: '90° Siku-siku', sublabel: 'Titik Temu Gedung-Tanah' },
+        { label: 'Panjang Tangga (c)', nilai: '? meter', sublabel: 'Hipotenusa (Sisi Miring)' }
+      ]
+    },
+    pertanyaan: 'Berapakah panjang minimum tangga darurat ($c$) yang dibutuhkan regu penyelamat tersebut?',
     opsi: {
       A: '13 meter',
       B: '14 meter',
@@ -368,7 +415,7 @@ Andi mengirim sebuah paket buku bacaan untuk perpustakaan desa dan membayar tota
       D: '17 meter'
     },
     kunci: 'A',
-    pembahasan: 'Langkah berpikir geometri:\n1. Dinding gedung dan tanah membentuk sudut siku-siku (90°).\n2. Tangga berfungsi sebagai sisi miring (hipotenusa, c).\n   Tinggi jendela (a) = 12 meter.\n   Jarak kaki tangga ke dinding (b) = 5 meter.\n3. Menurut Teorema Pythagoras:\n   c² = a² + b²\n   c² = 12² + 5² = 144 + 25 = 169\n   c = √169 = 13 meter.\nMaka panjang tangga minimum adalah 13 meter.',
+    pembahasan: 'Langkah berpikir geometri & Teorema Pythagoras:\n1. Dinding gedung dan permukaan tanah membentuk sudut siku-siku ($90^\\circ$).\n2. Tangga berperan sebagai sisi miring (hipotenusa, $c$):\n   - Sisi tegak / tinggi jendela ($a$) = $12\\text{ m}$\n   - Sisi alas / jarak kaki tangga ($b$) = $5\\text{ m}$\n3. Menurut Teorema Pythagoras:\n   $$c^2 = a^2 + b^2$$\n   $$c^2 = 12^2 + 5^2 = 144 + 25 = 169$$\n   $$c = \\sqrt{169} = 13\\text{ meter}$$\nMaka panjang tangga minimum adalah $13\\text{ meter}$.',
     tips_trik: 'Trik Cepat (Hafalan Tripel Pythagoras): Sisi tegak 12 m dan jarak 5 m merupakan pasangan tripel Pythagoras legendaris: (5, 12, 13). Tanpa perlu menghitung kuadrat dan akar, Anda bisa langsung memilih 13 meter!',
     indikator: 'Siswa dapat menentukan panjang hipotenusa menggunakan teorema Pythagoras dalam situasi nyata.',
     tag: ['Numerasi', 'Geometri', 'SMP 8', 'Pythagoras'],

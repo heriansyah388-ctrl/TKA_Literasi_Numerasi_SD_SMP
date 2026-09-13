@@ -12,7 +12,7 @@ import {
   formatKunciJawaban,
 } from '../utils/soalFormatHelper';
 import { exportToWordDoc } from '../utils/exportDocHelper';
-import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
+import { getFallbackTipsTrik, getDetailedTkaTips } from '../utils/tkaTipsHelper';
 
 interface PrintableViewProps {
   mode: 'siswa' | 'guru';
@@ -382,12 +382,51 @@ export const PrintableView: React.FC<PrintableViewProps> = ({
                         </p>
                       </div>
 
-                      <div className="p-2.5 bg-amber-50/80 rounded border border-amber-300 text-amber-950 text-[10.5px]">
-                        <strong className="text-amber-900 block mb-0.5">⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</strong>
-                        <p className="whitespace-pre-line leading-relaxed">
-                          {getFallbackTipsTrik(soal)}
-                        </p>
-                      </div>
+                      {(() => {
+                        const tips = getDetailedTkaTips(soal);
+                        return (
+                          <div className="p-3 bg-amber-50/90 rounded-lg border border-amber-300 text-amber-950 text-[10.5px] space-y-2">
+                            <div className="flex items-center justify-between border-b border-amber-200 pb-1">
+                              <strong className="text-amber-900 font-bold">
+                                ⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini: {tips.judulTrik}
+                              </strong>
+                              <span className="text-[9.5px] bg-amber-200/80 px-1.5 py-0.5 rounded text-amber-900 font-semibold">
+                                {tips.kategoriStrategi}
+                              </span>
+                            </div>
+
+                            <p className="font-semibold text-amber-950 bg-white/90 p-2 rounded border border-amber-200">
+                              <span className="text-amber-700 font-bold">Trik Kilat: </span>
+                              {tips.strategiSingkat}
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5 pt-1">
+                              {tips.langkahSiswa.map((l) => (
+                                <div key={l.nomor} className="bg-white/90 p-1.5 rounded border border-amber-200 text-[10px]">
+                                  <strong className="text-slate-900 block font-semibold">{l.nomor}. {l.judul}</strong>
+                                  <span className="text-slate-600">{l.deskripsi}</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1 border-t border-amber-200/80">
+                              <div className="bg-white/80 p-2 rounded border border-amber-200 text-[10px]">
+                                <strong className="text-indigo-900 block font-semibold">💡 Logika Konseptual (Mengapa Trik Ini Bekerja):</strong>
+                                <span className="text-slate-700">{tips.penjelasanKonsep}</span>
+                              </div>
+                              <div className="bg-white/80 p-2 rounded border border-amber-200 text-[10px]">
+                                <strong className="text-emerald-900 block font-semibold">👨‍🏫 Catatan Bimbingan Guru (Pedagogi):</strong>
+                                <span className="text-slate-700">{tips.panduanGuru}</span>
+                              </div>
+                            </div>
+
+                            <div className="bg-rose-50/90 p-1.5 rounded border border-rose-200 text-[10px] text-rose-900">
+                              <strong>⚠️ Waspada Jebakan Pengecoh: </strong>
+                              <span>{tips.waspadaJebakan}</span>
+                            </div>
+                          </div>
+                        );
+                      })()}
 
                       {/* Tabel Rubrik Skor Analitik Bertingkat untuk Pegangan Guru jika soal Uraian atau berbobot analitik */}
                       {isUraianSoal(soal) && (

@@ -21,6 +21,9 @@ import { SoalItem } from '../types';
 import { getRubrikForSoal } from '../utils/rubrikHelper';
 import { RubrikAnalitikTable } from './RubrikAnalitikTable';
 import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
+import { TipsTrikCard } from './TipsTrikCard';
+import { StimulusRenderer } from './StimulusRenderer';
+import { MathTextRenderer } from './MathTextRenderer';
 import {
   isPgkSoal,
   isMenjodohkanSoal,
@@ -164,8 +167,8 @@ ${rubricText}
         <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1.5">
           Stimulus:
         </span>
-        <div className="bg-amber-50/40 dark:bg-amber-950/30 border-l-4 border-amber-400 dark:border-amber-500 p-4 rounded-r-xl text-slate-800 dark:text-slate-200 text-sm leading-relaxed whitespace-pre-line font-serif">
-          {soal.stimulus}
+        <div className="bg-amber-50/40 dark:bg-amber-950/30 border-l-4 border-amber-400 dark:border-amber-500 p-4 rounded-r-xl text-slate-800 dark:text-slate-200 text-sm leading-relaxed font-serif">
+          <StimulusRenderer stimulus={soal.stimulus} visualData={soal.stimulus_visual} />
         </div>
       </div>
 
@@ -174,9 +177,9 @@ ${rubricText}
         <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
           Pertanyaan:
         </span>
-        <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-relaxed">
-          {soal.pertanyaan}
-        </p>
+        <div className="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-relaxed">
+          <MathTextRenderer text={soal.pertanyaan} />
+        </div>
       </div>
 
       {/* Area Tampilan Berdasarkan Bentuk Soal: Menjodohkan, PGK, Uraian, atau PG */}
@@ -375,7 +378,9 @@ ${rubricText}
                   >
                     {huruf}
                   </span>
-                  <span className="flex-1 leading-snug pt-0.5">{teks}</span>
+                  <div className="flex-1 leading-snug pt-0.5">
+                    <MathTextRenderer text={teks} inline />
+                  </div>
                   {isKunci && (
                     <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1 shrink-0">
                       <CheckCircle2 className="w-4 h-4" /> Kunci
@@ -439,21 +444,13 @@ ${rubricText}
             <span className="font-semibold text-slate-800 dark:text-slate-200 block mb-1">
               Langkah Pembahasan &amp; Pembuktian:
             </span>
-            <p className="text-slate-700 dark:text-slate-300 whitespace-pre-line leading-relaxed bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
-              {soal.pembahasan}
-            </p>
+            <div className="text-slate-700 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
+              <MathTextRenderer text={soal.pembahasan} />
+            </div>
           </div>
 
           {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
-          <div className="p-3.5 bg-gradient-to-r from-amber-50 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/30 rounded-xl border border-amber-200/90 dark:border-amber-800/80 text-xs shadow-2xs">
-            <div className="flex items-center gap-2 text-amber-900 dark:text-amber-300 font-bold mb-1.5">
-              <Zap className="w-4 h-4 text-amber-600 fill-amber-500 shrink-0" />
-              <span>Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</span>
-            </div>
-            <p className="text-amber-950 dark:text-amber-200 font-medium leading-relaxed bg-white/95 dark:bg-slate-900/95 p-3 rounded-lg border border-amber-200 dark:border-amber-800/60 shadow-2xs">
-              {getFallbackTipsTrik(soal)}
-            </p>
-          </div>
+          <TipsTrikCard soal={soal} defaultExpanded={true} />
 
           {/* If Rubrik not already open above, show it here */}
           {!showRubrik && (

@@ -11,12 +11,13 @@ import {
   Share2,
   Sun,
   Moon,
+  Users,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 interface HeaderProps {
-  activeTab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi';
-  setActiveTab: (tab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi') => void;
+  activeTab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai';
+  setActiveTab: (tab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai') => void;
   totalSoal: number;
   onPrintStudent: () => void;
   onPrintTeacher: () => void;
@@ -26,6 +27,7 @@ interface HeaderProps {
   onOpenJson: () => void;
   hasGeminiKey: boolean;
   totalBankKurasi?: number;
+  totalRekapCount?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -40,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenJson,
   hasGeminiKey,
   totalBankKurasi = 10,
+  totalRekapCount = 0,
 }) => {
   const { theme, isDark, toggleTheme } = useTheme();
 
@@ -304,6 +307,32 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             6. Profil &amp; Rekomendasi
+          </button>
+
+          <button
+            id="tab-btn-rekap-nilai"
+            onClick={() => setActiveTab('rekap_nilai')}
+            className={`relative px-3 py-2 text-xs sm:text-sm font-medium rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+              activeTab === 'rekap_nilai'
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'text-emerald-700 dark:text-emerald-300 bg-emerald-50/70 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
+            }`}
+          >
+            <span className="flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5" />
+              <span>7. Rekap Nilai Kelas</span>
+              {totalRekapCount > 0 && (
+                <span
+                  className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                    activeTab === 'rekap_nilai'
+                      ? 'bg-white text-emerald-800'
+                      : 'bg-emerald-200/80 dark:bg-emerald-800 text-emerald-900 dark:text-emerald-100'
+                  }`}
+                >
+                  {totalRekapCount}
+                </span>
+              )}
+            </span>
           </button>
         </nav>
       </div>

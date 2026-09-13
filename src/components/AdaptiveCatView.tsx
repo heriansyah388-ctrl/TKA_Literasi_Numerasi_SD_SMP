@@ -17,6 +17,9 @@ import {
 import { SoalItem, Jenjang, Kelas, Domain, AnalisisHasil } from '../types';
 import { DEFAULT_SOAL_BANK } from '../data/defaultBank';
 import { getFallbackTipsTrik } from '../utils/tkaTipsHelper';
+import { TipsTrikCard } from './TipsTrikCard';
+import { StimulusRenderer } from './StimulusRenderer';
+import { MathTextRenderer } from './MathTextRenderer';
 
 interface AdaptiveCatViewProps {
   jenjang: Jenjang;
@@ -346,16 +349,19 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
 
           {/* Stimulus */}
           <div className="mb-4">
-            <div className="bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-600 p-4 rounded-r-xl text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-serif">
-              {currentSoal.stimulus}
+            <div className="bg-slate-50 dark:bg-slate-800/60 border-l-4 border-indigo-600 p-4 rounded-r-xl text-slate-800 dark:text-slate-200 text-xs sm:text-sm leading-relaxed font-serif">
+              <StimulusRenderer
+                stimulus={currentSoal.stimulus}
+                visualData={currentSoal.stimulus_visual}
+              />
             </div>
           </div>
 
           {/* Pertanyaan */}
           <div className="mb-5">
-            <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 leading-snug">
-              {currentSoal.pertanyaan}
-            </p>
+            <div className="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 leading-snug">
+              <MathTextRenderer text={currentSoal.pertanyaan} />
+            </div>
           </div>
 
           {/* Options */}
@@ -395,7 +401,9 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
                     >
                       {huruf}
                     </span>
-                    <span className="flex-1 leading-snug pt-0.5">{teks}</span>
+                    <div className="flex-1 leading-snug pt-0.5">
+                      <MathTextRenderer text={teks} inline />
+                    </div>
                     {showExplanation && isCorrect && (
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     )}
@@ -459,15 +467,7 @@ export const AdaptiveCatView: React.FC<AdaptiveCatViewProps> = ({
               </div>
 
               {/* Tips & Trik Cepat Menjawab Soal TKA Ini */}
-              <div className="p-3.5 bg-linear-to-r from-amber-50 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/30 rounded-xl border border-amber-200/90 dark:border-amber-800/80 text-xs shadow-2xs">
-                <div className="flex items-center gap-2 text-amber-900 dark:text-amber-300 font-bold mb-1.5">
-                  <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400 fill-amber-500 shrink-0" />
-                  <span>Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</span>
-                </div>
-                <p className="text-amber-950 dark:text-amber-200 font-medium leading-relaxed bg-white/95 dark:bg-slate-900/95 p-3 rounded-lg border border-amber-200 dark:border-amber-800/80 shadow-2xs">
-                  {getFallbackTipsTrik(currentSoal)}
-                </p>
-              </div>
+              <TipsTrikCard soal={currentSoal} compact={false} defaultExpanded={true} />
 
               <div className="flex justify-end pt-2">
                 <button

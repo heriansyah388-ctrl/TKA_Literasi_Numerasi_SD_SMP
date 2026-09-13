@@ -108,7 +108,12 @@ PRINSIP WAJIB:
 - Distraktor opsi (A, B, C, D) harus masuk akal dan berasal dari kemungkinan kesalahan konsepsi siswa.
 - Kunci jawaban mutlak tepat dan dapat dibuktikan dari stimulus / perhitungan.
 - Pembahasan harus mendalam dan terstruktur: berikan "Langkah Pembahasan & Pembuktian" (proses berpikir langkah demi langkah, bukti kalimat dari stimulus untuk Literasi, dan prosedur matematis/logis untuk Numerasi).
-- WAJIB MENAMBAHKAN TIPS & TRIK CEPAT: Setiap butir soal WAJIB memiliki properti "tips_trik" berisi "Tips & Trik cepat menjawab soal TKA ini" (strategi cerdas, eliminasi opsi ekstrem/pembatas mutlak, teknik scanning kata kunci pada stimulus, rumus praktis, tripel pythagoras, faktor pengali persentase, atau trik hemat waktu bagi siswa).
+- WAJIB MENAMBAHKAN TIPS & TRIK CEPAT DENGAN PENJELASAN PEDAGOGIS LENGKAP: Setiap butir soal WAJIB memiliki properti "tips_trik" berisi penjelasan terstruktur yang mudah dipahami guru dan siswa:
+  1. Trik Kilat & Strategi Cepat (hemat waktu, eliminasi pembatas mutlak, scanning kata kunci, pola angka/rumus praktis).
+  2. Langkah Cepat Siswa (tindakan praktis langkah 1, 2, 3).
+  3. Penjelasan Logika Konseptual (alasan mendasar mengapa trik ini valid secara akademis, bukan tebak-tebakan).
+  4. Catatan Bimbingan Guru (panduan pedagogis bagi guru dalam menerangkan konsep & mengatasi miskonsepsi).
+  5. Waspada Jebakan Soal (trik menghindari distraktor pengecoh yang mengecoh).
 - Cantumkan indikator keberhasilan, kemampuan yang diukur, kesalahan umum siswa, serta alasan distraktor.
 - PENTING UNTUK SOAL URAIAN: Jika bentuk_soal adalah 'Uraian' atau 'Campuran', WAJIB menyertakan objek 'rubrik' (Rubrik Skor Analitik Bertingkat skala 2, 1, 0) lengkap dengan deskripsi kriteria dan contoh jawaban siswa.
 - Terapkan 10 Internal Quality Checks sebelum menghasilkan output.

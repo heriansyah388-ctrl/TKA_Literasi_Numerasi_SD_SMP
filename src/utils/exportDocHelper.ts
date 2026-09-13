@@ -8,7 +8,7 @@ import {
   formatKunciJawaban,
 } from './soalFormatHelper';
 import { getRubrikForSoal } from './rubrikHelper';
-import { getFallbackTipsTrik } from './tkaTipsHelper';
+import { getFallbackTipsTrik, getDetailedTkaTips } from './tkaTipsHelper';
 
 function escapeHtml(str: string | undefined | null): string {
   if (!str) return '';
@@ -298,10 +298,34 @@ export function exportToWordDoc(
             <span style="color: #334155; line-height: 1.4;">${escapeHtml(soal.pembahasan).replace(/\n/g, '<br/>')}</span>
           </div>
 
-          <div style="margin-bottom: 6pt; background-color: #fffbeb; border: 1pt solid #fcd34d; padding: 5pt 7pt; font-size: 8.5pt; color: #78350f;">
-            <strong>⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini:</strong><br/>
-            <span style="line-height: 1.4;">${escapeHtml(getFallbackTipsTrik(soal)).replace(/\n/g, '<br/>')}</span>
-          </div>
+          ${(() => {
+            const tips = getDetailedTkaTips(soal);
+            return `
+              <div style="margin-bottom: 8pt; background-color: #fffbeb; border: 1pt solid #f59e0b; padding: 6pt 8pt; font-size: 8.5pt; color: #78350f;">
+                <div style="font-weight: bold; color: #92400e; font-size: 9pt; margin-bottom: 4pt; border-bottom: 0.5pt solid #fcd34d; padding-bottom: 2pt;">
+                  ⚡ Tips &amp; Trik Cepat Menjawab Soal TKA Ini: ${escapeHtml(tips.judulTrik)} [${escapeHtml(tips.kategoriStrategi)}]
+                </div>
+                <div style="margin-bottom: 4pt;">
+                  <strong>Trik Kilat:</strong> ${escapeHtml(tips.strategiSingkat)}
+                </div>
+                <div style="margin-bottom: 4pt;">
+                  <strong>Langkah Praktis Siswa:</strong>
+                  <ol style="margin: 2pt 0 4pt 16pt; padding: 0;">
+                    ${tips.langkahSiswa.map((l) => `<li><strong>${escapeHtml(l.judul)}:</strong> ${escapeHtml(l.deskripsi)}</li>`).join('')}
+                  </ol>
+                </div>
+                <div style="margin-bottom: 3pt;">
+                  <strong>💡 Logika Konseptual (Mengapa Trik Ini Bekerja):</strong> ${escapeHtml(tips.penjelasanKonsep)}
+                </div>
+                <div style="margin-bottom: 3pt;">
+                  <strong>👨‍🏫 Catatan Bimbingan Guru (Pedagogi Kelas):</strong> ${escapeHtml(tips.panduanGuru)}
+                </div>
+                <div style="color: #991b1b; background-color: #fee2e2; border: 0.5pt solid #f87171; padding: 3pt 5pt; margin-top: 4pt;">
+                  <strong>⚠️ Waspada Jebakan Pengecoh:</strong> ${escapeHtml(tips.waspadaJebakan)}
+                </div>
+              </div>
+            `;
+          })()}
       `;
 
       // Rubrik Analitik Uraian
