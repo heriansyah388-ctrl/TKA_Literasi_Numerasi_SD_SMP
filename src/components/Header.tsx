@@ -12,12 +12,14 @@ import {
   Sun,
   Moon,
   Users,
+  Award,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { AppTab } from '../types';
 
 interface HeaderProps {
-  activeTab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai';
-  setActiveTab: (tab: 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai') => void;
+  activeTab: AppTab;
+  setActiveTab: (tab: AppTab) => void;
   totalSoal: number;
   onPrintStudent: () => void;
   onPrintTeacher: () => void;
@@ -56,13 +58,23 @@ export const Header: React.FC<HeaderProps> = ({
               <GraduationCap className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-tight">
                   TKA Literasi & Numerasi
                 </h1>
                 <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                   SD &amp; SMP
                 </span>
+                <button
+                  type="button"
+                  id="header-btn-badge-gerak"
+                  onClick={() => setActiveTab('gerak_berdampak')}
+                  className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 text-[10.5px] font-bold cursor-pointer transition-colors shadow-2xs"
+                  title="Klik untuk membuka Panduan Inovasi Pengawasan GERAK BERDAMPAK"
+                >
+                  <Award className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>GERAK BERDAMPAK</span>
+                </button>
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Generator Tes Kemampuan Akademik Berstandar Kurikulum Nasional
@@ -332,6 +344,21 @@ export const Header: React.FC<HeaderProps> = ({
                   {totalRekapCount}
                 </span>
               )}
+            </span>
+          </button>
+
+          <button
+            id="tab-btn-gerak-berdampak"
+            onClick={() => setActiveTab('gerak_berdampak')}
+            className={`relative px-3 py-2 text-xs sm:text-sm font-semibold rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
+              activeTab === 'gerak_berdampak'
+                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                : 'text-amber-800 dark:text-amber-300 bg-amber-50/80 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800'
+            }`}
+          >
+            <span className="flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <span>8. Inovasi GERAK BERDAMPAK</span>
             </span>
           </button>
         </nav>

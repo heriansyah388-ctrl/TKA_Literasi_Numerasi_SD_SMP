@@ -10,6 +10,7 @@ import { JsonModal } from './components/JsonModal';
 import { ShareLinkModal } from './components/ShareLinkModal';
 import { BankKurasiCatalog } from './components/BankKurasiCatalog';
 import { RekapNilaiKelasView } from './components/RekapNilaiKelasView';
+import { GerakBerdampakView } from './components/GerakBerdampakView';
 import { DEFAULT_SOAL_BANK } from './data/defaultBank';
 import {
   PaketSoalResponse,
@@ -29,6 +30,7 @@ import {
   ModeGenerator,
   EngineSumber,
   IdentitasSiswa,
+  AppTab,
 } from './types';
 import { checkJawaban } from './utils/soalFormatHelper';
 import { exportToWordDoc } from './utils/exportDocHelper';
@@ -51,9 +53,7 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<
-    'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai'
-  >(() => {
+  const [activeTab, setActiveTab] = useState<AppTab>(() => {
     try {
       if (typeof window !== 'undefined') {
         const params = new URLSearchParams(window.location.search);
@@ -65,9 +65,10 @@ export default function App() {
           mode === 'bank_kurasi' ||
           mode === 'generator' ||
           mode === 'rekap_nilai' ||
-          mode === 'laporan'
+          mode === 'laporan' ||
+          mode === 'gerak_berdampak'
         ) {
-          return mode as 'generator' | 'soal_list' | 'cbt' | 'cat' | 'laporan' | 'bank_kurasi' | 'rekap_nilai';
+          return mode as AppTab;
         }
       }
     } catch {
@@ -164,15 +165,38 @@ export default function App() {
     });
 
     const pool = filtered.length > 0 ? filtered : DEFAULT_SOAL_BANK;
+    // Shuffle pool
+    const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
     const picked: SoalItem[] = [];
 
+    const nameVariants = [
+      { from: /Pak Budi/gi, to: 'Pak Rahmat' },
+      { from: /Siti/gi, to: 'Nurhalizah' },
+      { from: /Andi/gi, to: 'Andi Tenri' },
+      { from: /Ani/gi, to: 'Meutia' },
+      { from: /SDN Pertiwi/gi, to: 'SD Inpres Sidrap' },
+      { from: /SMP Negeri 1/gi, to: 'SMP Unggulan Sidrap' },
+    ];
+
     for (let i = 0; i < count; i++) {
-      const base = pool[i % pool.length];
+      const base = shuffledPool[i % shuffledPool.length];
+      let mutStimulus = base.stimulus;
+      let mutPertanyaan = base.pertanyaan;
+      let mutPembahasan = base.pembahasan;
+      if (i > 0) {
+        const variant = nameVariants[i % nameVariants.length];
+        mutStimulus = mutStimulus.replace(variant.from, variant.to);
+        mutPertanyaan = mutPertanyaan.replace(variant.from, variant.to);
+        mutPembahasan = mutPembahasan.replace(variant.from, variant.to);
+      }
       picked.push({
         ...base,
         id: `${base.id}-${i + 1}`,
         kelas: kelas as any,
         jenjang: jenjang as any,
+        stimulus: mutStimulus,
+        pertanyaan: mutPertanyaan,
+        pembahasan: mutPembahasan,
       });
     }
 
@@ -216,10 +240,14 @@ export default function App() {
   }) => {
     setIsLoading(true);
     try {
+      const randomSeed = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
+        body: JSON.stringify({
+          ...params,
+          randomSeed,
+        }),
       });
 
       if (res.ok) {
@@ -229,7 +257,7 @@ export default function App() {
           setActiveTab('soal_list');
           showToast(
             json.source === 'gemini'
-              ? `Berhasil membuat ${json.data.soal.length} soal baru dengan Gemini AI!`
+              ? `Berhasil membuat ${json.data.soal.length} butir soal orisinal baru dengan Gemini AI!`
               : `Berhasil memuat ${json.data.soal.length} butir soal terkalibrasi kurikulum!`
           );
           return;
@@ -760,6 +788,16 @@ export default function App() {
               setCurrentPaket(pkt);
               setActiveTab('cbt');
               showToast(`Memulai sesi ujian remedial siswa (${pkt.soal.length} butir soal).`);
+            }}
+          />
+        )}
+
+        {/* TAB 8: Inovasi GERAK BERDAMPAK */}
+        {activeTab === 'gerak_berdampak' && (
+          <GerakBerdampakView
+            onNavigateTab={(tab) => {
+              setActiveTab(tab);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
         )}

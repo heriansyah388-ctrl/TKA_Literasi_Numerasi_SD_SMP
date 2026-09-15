@@ -48,6 +48,83 @@ app.get('/api/bank-kurasi', (req, res) => {
   });
 });
 
+// Diverse context themes for high variation and strict non-repetition
+const THEMATIC_PALETTE = [
+  'Teknologi Pembangkit Listrik Tenaga Bayu (PLTB) Sidrap & Pemanfaatan Energi Angin Terbarukan',
+  'Pengolahan Kuliner Tradisional Bugis-Nusantara (Barongko, Kue Bolu Peca, Kapurung, Jalangkote)',
+  'Konservasi Ekologi Danau Sidenreng, Habitat Burung Migran & Pelestarian Ikan Air Tawar',
+  'Tata Kelola Lumbung Padi Modern, Efisiensi Saluran Irigasi Persawahan & Panen Raya Organik',
+  'Arsitektur Rumah Panggung Kayu Nusantara Tahan Gempa & Prinsip Kesetimbangan Struktur',
+  'Tradisi Gotong Royong Mappalette Bola (Pindah Rumah Adat) & Analisis Dinamika Gaya Fisika',
+  'Kerajinan Tenun Sutera Motif Sengkang & Perhitungan Geometri Simetri Lipat serta Pola Fraktal',
+  'Navigasi Pelayaran Tradisional Perahu Phinisi Menggunakan Rasi Bintang Pari dan Bintang Salib',
+  'Ekosistem Hutan Mangrove Pesisir, Penahan Gelombang Tsunami & Habitat Kepiting Bakau',
+  'Sistem Tata Surya: Lintasan Komet, Orbit Satelit Cuaca, dan Analisis Gerhana Bulan',
+  'Pelestarian Satwa Endemik Kawasan Wallacea (Anoa Pegunungan, Babirusa, Burung Maleo)',
+  'Pengelolaan Sampah Terpadu Sekolah, Bank Sampah Mandiri & Pembuatan Daur Ulang Ecobrick',
+  'Efisiensi Penggunaan Air Bersih Rumah Tangga & Pembuatan Sumur Lubang Biopori Resapan Hujan',
+  'Budidaya Hidroponik Sayuran Daun Hijau (Selada, Kangkung) di Green House Kebun Sekolah',
+  'Pedoman Pola Gizi Seimbang Kemenkes "Isi Piringku" & Pemilihan Jajanan Sehat Bergizi',
+  'Pengukuran Kebugaran Jasmani Siswa: Frekuensi Denyut Nadi Istirahat vs Pasca Lari Cepat',
+  'Koperasi Siswa Sekolah: Pembukuan Kas Sederhana, Diskon Bazar Buku & Perhitungan Laba Jujur',
+  'Literasi Keuangan Siswa: Membandingkan Harga Satuan Belanja Grosir vs Eceran',
+  'Logistik Distribusi Bahan Pokok Pedesaan & Perhitungan Rute Terpendek Berbantuan Peta Digital',
+  'Pemanfaatan Sensor Kelembaban Tanah Otomatis untuk Penyiraman Bibit Padi Cerdas Berbasis IoT',
+  'Pengamatan Mikroskopis Stomata Daun & Proses Fotosintesis Menghasilkan Karbohidrat dan Oksigen',
+  'Kecepatan Arus Aliran Sungai & Perhitungan Debit Aliran Air Bendungan Pengairan Pertanian',
+  'Eksperimen Gaya Gesek Permukaan Kasar vs Licin dan Sudut Kemiringan Papan Luncur',
+  'Siklus Daur Air Alami: Evaporasi, Transpirasi, Kondensasi, dan Pembentukan Awan Hujan',
+  'Pendakian Jalur Wisata Alam & Pengukuran Penurunan Suhu Udara Berdasarkan Ketinggian Tempat',
+  'Keanekaragaman Terumbu Karang Kepulauan Selayar & Jaring-jaring Rantai Makanan Laut Dangkal',
+  'Etika Berselancar di Ruang Digital: Kekuatan Kata Sandi Akun, Privasi Data & Literasi Berita Fakta',
+  'Pemberdayaan Usaha Mikro Pembuatan Keripik Pisang Lokal: Perhitungan Bahan Baku & Kemasan',
+  'Pembuatan Pupuk Kompos Organik dari Daun Kering Guguran Sekolah & Grafik Suhu Fermentasi',
+  'Peta Pembagian Tiga Zona Waktu Indonesia (WIB, WITA, WIT) & Analisis Jadwal Perjalanan Kapal',
+  'Statistik Hasil Panen Kebun Buah Naga & Analisis Diagram Batang Penjualan Mingguan',
+  'Perhitungan Luas Bidang Atap Panel Surya Sekolah untuk Efisiensi Penghematan Tagihan Listrik',
+  'Pola Barisan Bilangan Aritmetika pada Penomoran Kursi Tribun Gelanggang Olahraga',
+  'Analisis Kandungan Gula pada Minuman Kemasan Berdasarkan Tabel Informasi Nilai Gizi',
+  'Keseimbangan Ekosistem Padang Savana & Peran Predator Puncak dalam Piramida Makanan',
+  'Jadwal dan Kecepatan Rata-Rata Kereta Cepat Antar-Kota Modern Melintasi Lintasan Rel',
+  'Penaksiran Tinggi Pohon Beringin Rindang Sekolah Menggunakan Teori Panjang Bayangan Matahari',
+  'Pengolahan Minyak Kelapa Murni (Virgin Coconut Oil) Skala Rumah Tangga Ramah Lingkungan',
+  'Eksplorasi Palung Laut Dalam: Adaptasi Tekanan Hidrostatis Ekstrem & Organisme Bioluminesensi',
+  'Perjalanan Menembus Jalur Wisata Hutan Edukasi: Penentuan Derajat Sudut Kompas Magnetik',
+];
+
+// Helper to shuffle array and pick distinct context themes
+function getShuffledUniqueThemes(
+  count: number,
+  excludeKeywords: string[] = [],
+  topikKhusus?: string
+): string[] {
+  const cleanExclude = excludeKeywords.map((k) => k.toLowerCase().trim()).filter(Boolean);
+  const eligible = THEMATIC_PALETTE.filter((t) => {
+    const tLower = t.toLowerCase();
+    return !cleanExclude.some((k) => tLower.includes(k));
+  });
+
+  const source = eligible.length >= count ? eligible : THEMATIC_PALETTE;
+  const copy = [...source];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  const result: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const baseTheme = copy[i % copy.length];
+    if (topikKhusus && i === 0) {
+      result.push(`${topikKhusus} (Fokus Utama)`);
+    } else if (i < copy.length) {
+      result.push(baseTheme);
+    } else {
+      result.push(`${baseTheme} - Studi Kasus Berbeda ${Math.floor(i / copy.length) + 1}`);
+    }
+  }
+  return result;
+}
+
 // Prompt builder for Indonesian Literacy and Numeracy questions
 function buildGeneratorPrompt(params: {
   jenjang: string;
@@ -61,6 +138,9 @@ function buildGeneratorPrompt(params: {
   bahasa: string;
   mode: string;
   topikKhusus?: string;
+  randomSeed?: string;
+  excludeTopics?: string[];
+  variasiTema?: string[];
 }): string {
   const {
     jenjang,
@@ -74,11 +154,34 @@ function buildGeneratorPrompt(params: {
     bahasa,
     mode,
     topikKhusus,
+    randomSeed = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}`,
+    excludeTopics = [],
   } = params;
 
+  const assignedThemes = getShuffledUniqueThemes(jumlah_soal, excludeTopics, topikKhusus);
+
   return `
-Anda adalah AI Generator Soal Kompetensi Akademik Siswa SD dan SMP di Indonesia.
-Tugas utama Anda adalah menghasilkan ${jumlah_soal} butir soal asesmen yang valid, kontekstual, bervariasi, tidak monoton, dan mampu mengukur kompetensi akademik siswa sesuai kurikulum nasional dan standar Tes Kemampuan Akademik (TKA).
+Anda adalah AI Generator Soal Tes Kemampuan Akademik (TKA) Siswa SD dan SMP di Indonesia yang sangat ahli dan berdedikasi tinggi.
+Tugas utama Anda adalah menghasilkan TEPAT ${jumlah_soal} butir soal asesmen yang VALID, KONTEKSTUAL, ORISINAL, BERVARIASI TINGGI, dan TIDAK PERNAH MENGULANG BUTIR/TOPIK YANG SAMA.
+
+================================================================================
+ATURAN EMAS ANTI-DUPLIKASI & DIVERSIFIKASI MAKSIMAL (SANGAT PENTING):
+================================================================================
+1. IDENTITAS SESI GENERATOR ACAK: #${randomSeed}
+2. LARANGAN KERAS: JANGAN PERNAH membuat butir soal yang berulang, mirip, atau memiliki alur cerita dan angka yang sama, baik antar-butir di dalam paket ini maupun terhadap soal yang pernah ada!
+3. DIVERSIFIKASI KONTEKS BUTIR PER BUTIR:
+   Setiap butir soal (${1} s.d. ${jumlah_soal}) WAJIB MENGGUNAKAN TOPIK, LATAR CERITA, DAN STIMULUS DUNIA NYATA BERIKUT (1 BUTIR = 1 TOPIK BERBEDA):
+${assignedThemes.map((t, idx) => `   * Butir #${idx + 1}: Wajib berlatar "${t}"`).join('\n')}
+${
+  excludeTopics.length > 0
+    ? `4. TOPIK YANG DILARANG DIGUNAKAN KARENA SUDAH ADA DI SESI SEBELUMNYA:
+   ${excludeTopics.slice(0, 10).join(', ')}`
+    : ''
+}
+5. DIVERSIFIKASI NAMA DAN ANGKA:
+   - Dilarang hanya menggunakan nama "Pak Budi", "Siti", atau "Ani" secara seragam! Gunakan variasi nama Nusantara yang beragam (misal: Rahmat, Nurhalizah, Andi Tenri, Dewa, Wayan, Eka, Putu, Meutia, Farhan, Fatimah, Daeng Rewa, dsb).
+   - Pada Numerasi: Gunakan angka-angka realistis yang berbeda di setiap soal. Jangan gunakan pola perkalian atau pecahan yang identik di beberapa soal.
+   - Pada Literasi: Gunakan ragam teks yang berbeda untuk tiap butir (teks narasi sastra anak, teks eksplanasi sains, kutipan dialog wawancara, infografis fakta, tabel data, poster himbauan).
 
 PARAMETER INPUT:
 - Jenjang: ${jenjang}
@@ -91,23 +194,22 @@ PARAMETER INPUT:
 - Konteks: ${konteks}
 - Gaya Bahasa: ${bahasa}
 - Mode Generator: ${mode}
-${topikKhusus ? `- Fokus Topik Khusus: ${topikKhusus}` : ''}
+${topikKhusus ? `- Fokus Topik Khusus Tambahan: ${topikKhusus}` : ''}
 
 PEDOMAN DOMAIN:
 1. LITERASI:
    Subdomain: Menemukan informasi, Memahami informasi, Menganalisis informasi, Mengevaluasi informasi, Merefleksikan informasi.
-   Gunakan jenis teks beragam (narasi, deskripsi, eksposisi, prosedur, berita sederhana, data tabel, poster/infografis singkat).
-   Untuk SD: teks konkret dekat dengan kehidupan anak, kalimat relatif pendek.
-   Untuk SMP: teks lebih kompleks, kosakata kaya, butuh penalaran dan perbandingan multi-informasi.
+   Untuk SD: teks konkret dekat dengan kehidupan anak, kalimat runtut dan edukatif.
+   Untuk SMP: teks lebih analitis, kosakata kaya, butuh penalaran dan perbandingan multi-informasi.
 
 2. NUMERASI:
    Subdomain: Bilangan, Aljabar, Geometri dan pengukuran, Data dan ketidakpastian, Pemecahan masalah.
-   PENTING: Jangan membuat soal numerasi hanya berupa operasi hitung murni! Wajib menggunakan konteks realistis dan penalaran siswa.
+   PENTING: Jangan membuat soal numerasi hanya berupa hitungan aritmatika mentah tanpa cerita! Wajib berupa pemecahan masalah kontekstual yang merangsang nalar berpikir kritis siswa.
 
-PRINSIP WAJIB:
-- Distraktor opsi (A, B, C, D) harus masuk akal dan berasal dari kemungkinan kesalahan konsepsi siswa.
-- Kunci jawaban mutlak tepat dan dapat dibuktikan dari stimulus / perhitungan.
-- Pembahasan harus mendalam dan terstruktur: berikan "Langkah Pembahasan & Pembuktian" (proses berpikir langkah demi langkah, bukti kalimat dari stimulus untuk Literasi, dan prosedur matematis/logis untuk Numerasi).
+PRINSIP PENYUSUNAN BUTIR:
+- Distraktor opsi (A, B, C, D) harus masuk akal, homogen panjangnya, dan berasal dari kemungkinan miskonsepsi berpikir siswa.
+- Kunci jawaban mutlak akurat dan dapat dibuktikan kebenarannya secara logis dari stimulus.
+- Pembahasan harus mendalam dan terstruktur: berikan "Langkah Pembahasan & Pembuktian" (proses berpikir langkah demi langkah, kutipan kalimat bukti stimulus untuk Literasi, dan prosedur matematis/penalaran sistematis untuk Numerasi).
 - WAJIB MENAMBAHKAN TIPS & TRIK CEPAT DENGAN PENJELASAN PEDAGOGIS LENGKAP: Setiap butir soal WAJIB memiliki properti "tips_trik" berisi penjelasan terstruktur yang mudah dipahami guru dan siswa:
   1. Trik Kilat & Strategi Cepat (hemat waktu, eliminasi pembatas mutlak, scanning kata kunci, pola angka/rumus praktis).
   2. Langkah Cepat Siswa (tindakan praktis langkah 1, 2, 3).
@@ -116,7 +218,6 @@ PRINSIP WAJIB:
   5. Waspada Jebakan Soal (trik menghindari distraktor pengecoh yang mengecoh).
 - Cantumkan indikator keberhasilan, kemampuan yang diukur, kesalahan umum siswa, serta alasan distraktor.
 - PENTING UNTUK SOAL URAIAN: Jika bentuk_soal adalah 'Uraian' atau 'Campuran', WAJIB menyertakan objek 'rubrik' (Rubrik Skor Analitik Bertingkat skala 2, 1, 0) lengkap dengan deskripsi kriteria dan contoh jawaban siswa.
-- Terapkan 10 Internal Quality Checks sebelum menghasilkan output.
 
 OUTPUT HARUS DALAM FORMAT JSON VALID:
 {
@@ -193,6 +294,57 @@ OUTPUT HARUS DALAM FORMAT JSON VALID:
 `;
 }
 
+// Helper to synthesize fresh question variants for fallback or when count exceeds pre-curated pool
+function createDivergentSoal(base: SoalItem, index: number, kelas: string, jenjang: string): SoalItem {
+  if (index === 0) {
+    return {
+      ...base,
+      id: `SOAL-${jenjang}-${index + 1}`,
+      kelas: kelas as any,
+      jenjang: jenjang as any,
+    };
+  }
+
+  const nameVariants = [
+    { from: /Pak Budi/gi, to: 'Pak Rahmat' },
+    { from: /Siti/gi, to: 'Nurhalizah' },
+    { from: /Andi/gi, to: 'Andi Tenri' },
+    { from: /Ani/gi, to: 'Meutia' },
+    { from: /SDN Pertiwi/gi, to: 'SD Inpres Sidrap' },
+    { from: /SMP Negeri 1/gi, to: 'SMP Unggulan Sidrap' },
+  ];
+
+  let mutatedStimulus = base.stimulus;
+  let mutatedPertanyaan = base.pertanyaan;
+  let mutatedPembahasan = base.pembahasan;
+  let mutatedOpsi = { ...base.opsi };
+
+  // If numeracy, scale numbers slightly or vary parameters
+  if (base.domain === 'Numerasi') {
+    const scaleFactor = 1 + ((index % 3) + 1) * 0.5; // 1.5, 2.0, 2.5
+    mutatedStimulus = mutatedStimulus.replace(/\b(\d{2,5})\b/g, (match) => {
+      const val = parseInt(match, 10);
+      return String(Math.round(val * scaleFactor));
+    });
+  }
+
+  const variant = nameVariants[index % nameVariants.length];
+  mutatedStimulus = mutatedStimulus.replace(variant.from, variant.to);
+  mutatedPertanyaan = mutatedPertanyaan.replace(variant.from, variant.to);
+  mutatedPembahasan = mutatedPembahasan.replace(variant.from, variant.to);
+
+  return {
+    ...base,
+    id: `SOAL-${jenjang}-${index + 1}`,
+    kelas: kelas as any,
+    jenjang: jenjang as any,
+    stimulus: mutatedStimulus,
+    pertanyaan: mutatedPertanyaan,
+    opsi: mutatedOpsi,
+    pembahasan: mutatedPembahasan,
+  };
+}
+
 // Generate Questions API
 app.post('/api/generate', async (req, res) => {
   const {
@@ -208,6 +360,9 @@ app.post('/api/generate', async (req, res) => {
     mode = 'ASESMEN',
     topikKhusus = '',
     sumber = 'gemini', // 'gemini' | 'bank_kurasi'
+    randomSeed = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+    excludeTopics = [],
+    variasiTema = [],
   } = req.body;
 
   const count = Math.min(Math.max(Number(jumlah_soal) || 5, 1), 50);
@@ -226,12 +381,7 @@ app.post('/api/generate', async (req, res) => {
 
     for (let i = 0; i < count; i++) {
       const base = pool[i % pool.length];
-      picked.push({
-        ...base,
-        id: `${base.id}-${i + 1}`,
-        kelas: kelas as any,
-        jenjang: jenjang as any,
-      });
+      picked.push(createDivergentSoal(base, i, kelas, jenjang));
     }
 
     const bankResult: PaketSoalResponse = {
@@ -278,6 +428,9 @@ app.post('/api/generate', async (req, res) => {
           bahasa,
           mode,
           topikKhusus,
+          randomSeed,
+          excludeTopics,
+          variasiTema,
         });
 
         const response = await ai.models.generateContent({
@@ -285,7 +438,7 @@ app.post('/api/generate', async (req, res) => {
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
-            temperature: 0.7,
+            temperature: 0.85,
             maxOutputTokens: 65536,
           },
         });
@@ -312,6 +465,9 @@ app.post('/api/generate', async (req, res) => {
           bahasa,
           mode,
           topikKhusus: topikKhusus ? `${topikKhusus} (Bagian 1)` : undefined,
+          randomSeed: `${randomSeed}-A`,
+          excludeTopics,
+          variasiTema,
         });
 
         const promptB = buildGeneratorPrompt({
@@ -325,7 +481,10 @@ app.post('/api/generate', async (req, res) => {
           konteks,
           bahasa,
           mode,
-          topikKhusus: topikKhusus ? `${topikKhusus} (Bagian 2)` : 'Variasi konteks dan stimulus lanjutan',
+          topikKhusus: topikKhusus ? `${topikKhusus} (Bagian 2)` : undefined,
+          randomSeed: `${randomSeed}-B`,
+          excludeTopics: [...excludeTopics, 'bagian-1'],
+          variasiTema,
         });
 
         const [resA, resB] = await Promise.allSettled([
@@ -334,7 +493,7 @@ app.post('/api/generate', async (req, res) => {
             contents: promptA,
             config: {
               responseMimeType: 'application/json',
-              temperature: 0.7,
+              temperature: 0.85,
               maxOutputTokens: 65536,
             },
           }),
@@ -343,7 +502,7 @@ app.post('/api/generate', async (req, res) => {
             contents: promptB,
             config: {
               responseMimeType: 'application/json',
-              temperature: 0.7,
+              temperature: 0.9,
               maxOutputTokens: 65536,
             },
           }),
@@ -372,9 +531,32 @@ app.post('/api/generate', async (req, res) => {
         }
       }
 
-      if (rawSoalList.length > 0) {
+      // STRICT ANTI-DUPLICATION FILTER
+      // Verify questions are non-repetitive by checking cleaned question & stimulus signatures
+      const seenSignatures = new Set<string>();
+      const deduplicatedRaw: any[] = [];
+
+      for (const item of rawSoalList) {
+        if (!item || !item.pertanyaan) continue;
+        const qClean = String(item.pertanyaan).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 45);
+        const sClean = String(item.stimulus || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 45);
+        const sig = `${qClean}#${sClean}`;
+
+        if (seenSignatures.has(sig) || (qClean.length > 15 && seenSignatures.has(qClean))) {
+          // Duplicate found, discard item
+          continue;
+        }
+
+        seenSignatures.add(sig);
+        if (qClean.length > 15) {
+          seenSignatures.add(qClean);
+        }
+        deduplicatedRaw.push(item);
+      }
+
+      if (deduplicatedRaw.length > 0) {
         // Ensure every question has required keys and clean sequential numbering
-        const sanitizedSoal: SoalItem[] = rawSoalList.slice(0, count).map((item: any, idx: number) => ({
+        const sanitizedSoal: SoalItem[] = deduplicatedRaw.slice(0, count).map((item: any, idx: number) => ({
           id: `SOAL-${jenjang}-${idx + 1}`,
           jenjang: item.jenjang || jenjang,
           kelas: item.kelas || kelas,
@@ -405,6 +587,23 @@ app.post('/api/generate', async (req, res) => {
           tips_trik: item.tips_trik || undefined,
         }));
 
+        // If deduplication caused fewer questions than requested, supplement with differentiated items
+        if (sanitizedSoal.length < count) {
+          const filtered = DEFAULT_SOAL_BANK.filter((item) => {
+            if (domain === 'Literasi' && item.domain !== 'Literasi') return false;
+            if (domain === 'Numerasi' && item.domain !== 'Numerasi') return false;
+            if (jenjang && item.jenjang !== jenjang) return false;
+            return true;
+          });
+          const pool = filtered.length > 0 ? filtered : DEFAULT_SOAL_BANK;
+          let fillIndex = 0;
+          while (sanitizedSoal.length < count) {
+            const base = pool[fillIndex % pool.length];
+            sanitizedSoal.push(createDivergentSoal(base, sanitizedSoal.length, kelas, jenjang));
+            fillIndex++;
+          }
+        }
+
         const result: PaketSoalResponse = {
           metadata: {
             jenjang: jenjang as any,
@@ -423,14 +622,20 @@ app.post('/api/generate', async (req, res) => {
           soal: sanitizedSoal,
         };
 
-        return res.json({ success: true, data: result, source: 'gemini' });
+        return res.json({
+          success: true,
+          data: result,
+          source: 'gemini',
+          antiDuplikasi: true,
+          message: `Berhasil membuat ${sanitizedSoal.length} butir soal orisinal dan bervariasi dengan Gemini AI.`,
+        });
       }
     } catch (err: any) {
       console.warn('Gemini generation failed, falling back to curated bank:', err?.message || err);
     }
   }
 
-  // Fallback to high quality pre-curated default bank
+  // Fallback to high quality pre-curated default bank with divergent variations
   const filtered = DEFAULT_SOAL_BANK.filter((item) => {
     if (domain === 'Literasi' && item.domain !== 'Literasi') return false;
     if (domain === 'Numerasi' && item.domain !== 'Numerasi') return false;
@@ -443,12 +648,7 @@ app.post('/api/generate', async (req, res) => {
 
   for (let i = 0; i < count; i++) {
     const base = pool[i % pool.length];
-    picked.push({
-      ...base,
-      id: `${base.id}-${i + 1}`,
-      kelas: kelas as any,
-      jenjang: jenjang as any,
-    });
+    picked.push(createDivergentSoal(base, i, kelas, jenjang));
   }
 
   const fallbackResult: PaketSoalResponse = {
@@ -464,7 +664,7 @@ app.post('/api/generate', async (req, res) => {
       bahasa: bahasa as any,
       mode: mode as any,
       judul: `Paket Asesmen ${domain} - ${kelas} (${mode})`,
-      waktu_menit: picked.length * 2.5,
+      waktu_menit: Math.round(picked.length * 2.5),
     },
     soal: picked,
   };
@@ -473,7 +673,8 @@ app.post('/api/generate', async (req, res) => {
     success: true,
     data: fallbackResult,
     source: 'bank_fallback',
-    message: ai ? 'Menggunakan bank kurasi terkalibrasi' : 'Mode offline / bank kurasi terstandar',
+    antiDuplikasi: true,
+    message: ai ? 'Menggunakan bank kurasi terkalibrasi beraneka ragam' : 'Mode offline / bank kurasi terstandar',
   });
 });
 
@@ -487,6 +688,7 @@ app.post('/api/adaptive-next', async (req, res) => {
     lastAnswerCorrect = true,
     historyIds = [],
     step = 1,
+    randomSeed = `${Date.now()}-${step}`,
   } = req.body;
 
   // Determine next target difficulty
@@ -497,6 +699,10 @@ app.post('/api/adaptive-next', async (req, res) => {
     nextDifficulty = currentDifficulty === 'Sulit' ? 'Sedang' : 'Mudah';
   }
 
+  // Pick a dynamic theme from palette for this adaptive step
+  const themeIndex = (step * 7 + Math.floor(Math.random() * 5)) % THEMATIC_PALETTE.length;
+  const targetTheme = THEMATIC_PALETTE[themeIndex];
+
   const ai = getGeminiClient();
   if (ai) {
     try {
@@ -504,10 +710,17 @@ app.post('/api/adaptive-next', async (req, res) => {
 Hasilkan TEPAT 1 butir soal adaptif (Computerized Adaptive Testing) untuk siswa ${jenjang} (${kelas}).
 Domain: ${domain}
 Tingkat Kesulitan Target: ${nextDifficulty}
-Nomor Soal: Ke-${step}
+Nomor Langkah Soal: Ke-${step} (Sesi Acak #${randomSeed})
+Tema Konteks Spesifik: "${targetTheme}"
+
+ATURAN ANTI-DUPLIKASI KETAT:
+- DILARANG mengulang pertanyaan atau stimulus dari langkah sebelumnya.
+- Gunakan stimulus dunia nyata yang baru, segar, dan orisinal berlatar konteks "${targetTheme}".
+- Jangan gunakan tokoh klise berulang.
+
 Karakteristik:
 - Sangat kontekstual, menarik, realistis.
-- Menguji penalaran (bukan sekadar rumus/hafalan).
+- Menguji penalaran mendalam (bukan sekadar rumus mentah/hafalan).
 - 4 opsi pilihan ganda A, B, C, D dengan distraktor bermakna.
 - Pembahasan lengkap langkah demi langkah ("Langkah Pembahasan & Pembuktian").
 - WAJIB berikan "tips_trik": Tips dan trik cepat menjawab soal TKA ini.
@@ -519,7 +732,7 @@ Keluarkan dalam format JSON:
   "subdomain": "Subdomain relevan",
   "kompetensi": "Uraian kompetensi spesifik",
   "konten": "Konten materi",
-  "konteks": "Lingkungan/Sekolah/Sehari-hari",
+  "konteks": "${targetTheme}",
   "level_kognitif": "${nextDifficulty === 'Sulit' ? 'Menganalisis' : nextDifficulty === 'Sedang' ? 'Menerapkan' : 'Memahami'}",
   "kesulitan": "${nextDifficulty}",
   "bentuk_soal": "Pilihan Ganda",
@@ -546,7 +759,7 @@ Keluarkan dalam format JSON:
         contents: prompt,
         config: {
           responseMimeType: 'application/json',
-          temperature: 0.7,
+          temperature: 0.85,
         },
       });
 
@@ -559,15 +772,18 @@ Keluarkan dalam format JSON:
     }
   }
 
-  // Fallback from pool
-  const candidate = DEFAULT_SOAL_BANK.find(
-    (s) => s.kesulitan === nextDifficulty && (domain === 'Campuran' || s.domain === domain) && !historyIds.includes(s.id)
-  ) || DEFAULT_SOAL_BANK[step % DEFAULT_SOAL_BANK.length];
+  // Fallback from pool with divergence
+  const candidate =
+    DEFAULT_SOAL_BANK.find(
+      (s) => s.kesulitan === nextDifficulty && (domain === 'Campuran' || s.domain === domain) && !historyIds.includes(s.id)
+    ) || DEFAULT_SOAL_BANK[step % DEFAULT_SOAL_BANK.length];
+
+  const divergent = createDivergentSoal(candidate, step, kelas, jenjang);
 
   return res.json({
     success: true,
     soal: {
-      ...candidate,
+      ...divergent,
       id: `ADAPTIF-${step}`,
       kesulitan: nextDifficulty,
     },

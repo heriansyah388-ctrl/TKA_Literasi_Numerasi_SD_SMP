@@ -207,3 +207,13 @@ export interface RekapNilaiSiswa {
   numerasiBenar?: number;
   numerasiTotal?: number;
 }
+
+export type AppTab =
+  | 'generator'
+  | 'soal_list'
+  | 'cbt'
+  | 'cat'
+  | 'laporan'
+  | 'bank_kurasi'
+  | 'rekap_nilai'
+  | 'gerak_berdampak';
